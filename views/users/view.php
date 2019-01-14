@@ -35,9 +35,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'password_hash',
             'password_reset_token',
             'email:email',
-            'status',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function($data) {
+
+                    if ($data->status == $data::USR_STATUS_DELETED)
+                        return '<span class="label label-danger">'.Yii::t('app/modules/users','Deleted').'</span>';
+                    elseif ($data->status == $data::USR_STATUS_ACTIVE)
+                        return '<span class="label label-success">'.Yii::t('app/modules/users','Active').'</span>';
+                    else
+                        return false;
+
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'datetime',
+            ],
         ],
     ]) ?>
 

@@ -10,15 +10,13 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app/modules/users', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="page-header">
+    <h1><?= Html::encode($this->title) ?> <small class="text-muted pull-right">[v.<?= $this->context->module->version ?>]</small></h1>
+</div>
 <div class="users-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app/modules/users', 'Create Users'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,16 +26,46 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            //'email:email',
-            //'status',
-            //'created_at',
-            //'updated_at',
+            'email:email',
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'headerOptions' => [
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ]
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'headerOptions' => [
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ],
+                'value' => function($data) {
+
+                    if ($data->status == $data::USR_STATUS_DELETED)
+                        return '<span class="label label-danger">'.Yii::t('app/modules/users','Deleted').'</span>';
+                    elseif ($data->status == $data::USR_STATUS_ACTIVE)
+                        return '<span class="label label-success">'.Yii::t('app/modules/users','Active').'</span>';
+                    else
+                        return false;
+
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
+    <div>
+        <!-- ?= Html::a(Yii::t('app/modules/users', '&larr; Back to module'), ['../admin/users'], ['class' => 'btn btn-default pull-left']) ? -->
+        <?= Html::a(Yii::t('app/modules/users', 'Add new users'), ['create'], ['class' => 'btn btn-success pull-right']) ?>
+    </div>
+<?php Pjax::end(); ?>
 </div>
+
+<?php echo $this->render('../_debug'); ?>

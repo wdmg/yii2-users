@@ -22,14 +22,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList([
+        $model::USR_STATUS_ACTIVE => Yii::t('app/modules/users','Active'),
+        $model::USR_STATUS_DELETED => Yii::t('app/modules/users','Deleted'),
+    ]); ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
+    <hr/>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app/modules/users', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app/modules/users', '&larr; Back to list'), ['users/index'], ['class' => 'btn btn-default pull-left']) ?>&nbsp;
+        <?= Html::submitButton(Yii::t('app/modules/users', 'Save'), ['class' => 'btn btn-success pull-right']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -19,6 +19,14 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord
 {
+
+    /**
+     * Ticket status
+     * const, int: 0 - Deleted user, 10 - Active user
+     */
+    const USR_STATUS_DELETED = 0;
+    const USR_STATUS_ACTIVE = 10;
+
     /**
      * {@inheritdoc}
      */

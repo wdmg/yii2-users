@@ -17,13 +17,13 @@ class Bootstrap implements BootstrapInterface
         $prefix = (isset($module->routePrefix) ? $module->routePrefix . '/' : '');
 
         // Add module URL rules
-        /*$app->getUrlManager()->addRules(
+        $app->getUrlManager()->addRules(
             [
-                $prefix.'<controller:(default)>/' => 'users/<controller>/index',
-                $prefix.'users/<controller:(default)>/<action:\w+>' => 'users/<controller>/<action>',
-                $prefix.'<controller:(default)>/<action:\w+>' => 'users/<controller>/<action>',
+                $prefix.'<controller:(users)>/' => 'users/<controller>/index',
+                $prefix.'users/<controller:(users)>/<action:\w+>' => 'users/<controller>/<action>',
+                $prefix.'<controller:(users)>/<action:\w+>' => 'users/<controller>/<action>',
             ],
             false
-        );*/
+        );
     }
 }

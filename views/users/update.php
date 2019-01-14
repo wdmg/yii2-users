@@ -12,9 +12,10 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app/modules/users', 'Users'
 $this->params['breadcrumbs'][] = ['label' => ucfirst($model->username), 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app/modules/users', 'Update');
 ?>
+<div class="page-header">
+    <h1><?= Html::encode($this->title) ?> <small class="text-muted pull-right">[v.<?= $this->context->module->version ?>]</small></h1>
+</div>
 <div class="users-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

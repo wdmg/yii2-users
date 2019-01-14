@@ -1,0 +1,31 @@
+{
+  "name": "wdmg/yii2-users",
+  "description": "Users management module for Yii2",
+  "keywords": ["yii2", "yii2-users", "users", "users manager", "wdmg"],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wdmg/yii2-users",
+  "authors": [
+    {
+      "name": "Alexsander Vyshnyvetskyy",
+      "email": "alex.vyshnyvetskyy@gmail.com"
+    },
+    {
+      "name": "W.D.M.Group, Ukraine",
+      "email": "wdmg.com.ua@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "^2.0.10"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "wdmg\\users\\": ""
+    }
+  },
+  "extra": {
+    "bootstrap": "wdmg\\users\\Bootstrap"
+  }
+}

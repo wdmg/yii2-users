@@ -53,7 +53,7 @@ class InitController extends Controller
             $i = 0;
             foreach ($users as $user) {
 
-                echo $this->ansiFormat("Insert user... ", Console::FG_YELLOW);
+                echo $this->ansiFormat("Insert user #".($i+1)."... ", Console::FG_YELLOW);
 
                 $status = 10;
                 if($i >= 4)

@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     <div>
         <!-- ?= Html::a(Yii::t('app/modules/users', '&larr; Back to module'), ['../admin/users'], ['class' => 'btn btn-default pull-left']) ? -->
-        <?= Html::a(Yii::t('app/modules/users', 'Add new users'), ['create'], ['class' => 'btn btn-success pull-right']) ?>
+        <?= Html::a(Yii::t('app/modules/users', 'Add new user'), ['create'], ['class' => 'btn btn-success pull-right']) ?>
     </div>
 <?php Pjax::end(); ?>
 </div>

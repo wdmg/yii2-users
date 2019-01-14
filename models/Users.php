@@ -60,13 +60,13 @@ class Users extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app/modules/users', 'ID'),
             'username' => Yii::t('app/modules/users', 'Username'),
-            'auth_key' => Yii::t('app/modules/users', 'Auth Key'),
-            'password_hash' => Yii::t('app/modules/users', 'Password Hash'),
-            'password_reset_token' => Yii::t('app/modules/users', 'Password Reset Token'),
+            'auth_key' => Yii::t('app/modules/users', 'Auth key'),
+            'password_hash' => Yii::t('app/modules/users', 'Password hash'),
+            'password_reset_token' => Yii::t('app/modules/users', 'Password reset token'),
             'email' => Yii::t('app/modules/users', 'Email'),
             'status' => Yii::t('app/modules/users', 'Status'),
-            'created_at' => Yii::t('app/modules/users', 'Created At'),
-            'updated_at' => Yii::t('app/modules/users', 'Updated At'),
+            'created_at' => Yii::t('app/modules/users', 'Created at'),
+            'updated_at' => Yii::t('app/modules/users', 'Updated at'),
         ];
     }
 }

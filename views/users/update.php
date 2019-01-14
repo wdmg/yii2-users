@@ -5,11 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model wdmg\users\models\Users */
 
-$this->title = Yii::t('app/modules/users', 'Update Users: {name}', [
-    'name' => $model->id,
+$this->title = Yii::t('app/modules/users', 'Update user: {name}', [
+    'name' => $model->username,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/modules/users', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => ucfirst($model->username), 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app/modules/users', 'Update');
 ?>
 <div class="users-update">

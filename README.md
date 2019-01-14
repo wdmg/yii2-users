@@ -17,6 +17,18 @@ After configure db connection, run the following command in the console:
 And select the operation you want to perform:
   1) Apply all module migrations
   2) Revert all module migrations
+  3) Batch insert demo data<sup>*</sup>
+
+\* - The demo database contains 6 demo user`s with:
+
+| ID   | Username  | Password  | Email               | Status        |
+| ---- | --------- | --------- | ------------------- | ------------- |
+| 100  | admin     | johndoe   | johndoe@example.com |               |
+| 101  | demo      | demo      | demo@example.com    |               |
+| 102  | alice     | alice     | alice@example.com   |               |
+| 103  | bob       | bob       | bob@example.com     |               |
+| 104  | johndoe   | johndoe   | johndoe@example.com | `diactivated` |
+| 105  | janedoe   | janedoe   | janedoe@example.com | `diactivated` |
 
 # Migrations
 In any case, you can execute the migration and create the initial data, run the following command in the console:

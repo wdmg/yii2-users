@@ -29,6 +29,7 @@ class InitController extends Controller
         echo "Select the operation you want to perform:\n";
         echo "  1) Apply all module migrations\n";
         echo "  2) Revert all module migrations\n";
+        echo "  3) Batch insert demo data\n\n";
         echo "Your choice: ";
 
         $selected = trim(fgets(STDIN));
@@ -36,6 +37,47 @@ class InitController extends Controller
             Yii::$app->runAction('migrate/up', ['migrationPath' => '@vendor/wdmg/yii2-users/migrations', 'interactive' => true]);
         } else if($selected == "2") {
             Yii::$app->runAction('migrate/down', ['migrationPath' => '@vendor/wdmg/yii2-users/migrations', 'interactive' => true]);
+        }  else if($selected == "3") {
+
+            echo $this->ansiFormat("\n\n");
+
+            $users = [
+                'admin',
+                'demo',
+                'alice',
+                'bob',
+                'johndoe',
+                'janedoe'
+            ];
+
+            $i = 0;
+            foreach ($users as $user) {
+
+                echo $this->ansiFormat("Insert user... ", Console::FG_YELLOW);
+
+                $status = 10;
+                if($i >= 4)
+                    $status = 0;
+
+                Yii::$app->db->createCommand()->insert('{{users}}', [
+                    'id' => (100+$i),
+                    'username' => $user,
+                    'auth_key' => Yii::$app->security->generateRandomString(),
+                    'password_hash' => Yii::$app->security->generatePasswordHash($user),
+                    'password_reset_token' => null,
+                    'email' => $user . '@example.com',
+                    'status' => $status,
+                    'created_at' => date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " -".($i*2)." days" . " -".($i*2)." hours")),
+                    'updated_at' => date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " -".($i*2)." days" . " -".($i*2)." hours")),
+                ])->execute();
+
+                $i++;
+
+                echo $this->ansiFormat("Done.\n", Console::FG_GREEN);
+            }
+
+            echo $this->ansiFormat("Data inserted successfully.\n\n", Console::FG_GREEN);
+
         } else {
             echo $this->ansiFormat("Error! Your selection has not been recognized.\n\n", Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;

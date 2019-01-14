@@ -23,7 +23,7 @@ And select the operation you want to perform:
 
 | ID   | Username  | Password  | Email               | Status        |
 | ---- | --------- | --------- | ------------------- | ------------- |
-| 100  | admin     | johndoe   | johndoe@example.com |               |
+| 100  | admin     | admin     | admin@example.com   |               |
 | 101  | demo      | demo      | demo@example.com    |               |
 | 102  | alice     | alice     | alice@example.com   |               |
 | 103  | bob       | bob       | bob@example.com     |               |

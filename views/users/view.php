@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
 
     <hr/>
     <div class="form-group">
-        <?= Html::a(Yii::t('app/modules/users', '&larr; Back to list'), ['tasks/index'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a(Yii::t('app/modules/users', '&larr; Back to list'), ['users/index'], ['class' => 'btn btn-default']) ?>
         <?= Html::a(Yii::t('app/modules/users', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app/modules/users', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger pull-right',

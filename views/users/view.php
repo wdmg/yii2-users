@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use wdmg\helpers\DateAndTime;
 
 /* @var $this yii\web\View */
 /* @var $model wdmg\users\models\Users */
@@ -77,11 +78,25 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
             ],
             [
                 'attribute' => 'created_at',
-                'format' => 'datetime',
+                'format' => 'html',
+                'value' => function($data) {
+                    return \Yii::$app->formatter->asDatetime($data->created_at) . DateAndTime::diff($data->created_at." ", null, [
+                            'layout' => '<small class="pull-right {class}">[ {datetime} ]</small>',
+                            'inpastClass' => 'text-danger',
+                            'futureClass' => 'text-success',
+                        ]);
+                }
             ],
             [
                 'attribute' => 'updated_at',
-                'format' => 'datetime',
+                'format' => 'html',
+                'value' => function($data) {
+                    return \Yii::$app->formatter->asDatetime($data->updated_at) . DateAndTime::diff($data->updated_at." ", null, [
+                            'layout' => '<small class="pull-right {class}">[ {datetime} ]</small>',
+                            'inpastClass' => 'text-danger',
+                            'futureClass' => 'text-success',
+                        ]);
+                }
             ],
         ],
     ]) ?>

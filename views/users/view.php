@@ -21,9 +21,45 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
         'attributes' => [
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            [
+                'attribute' => 'auth_key',
+                'format' => 'html',
+                'value' => function($data) {
+                    $string = $data->auth_key;
+                    $length = strlen($string);
+                    $sub_len = abs($length / 10);
+                    if($string && $length > 6)
+                        return substr($string, 0, $sub_len) . '…' . substr($string, -$sub_len, $sub_len) . ' <span class="text-muted pull-right">[length: '.$length.']</span>';
+                    else
+                        return $string;
+                }
+            ],
+            [
+                'attribute' => 'password_hash',
+                'format' => 'html',
+                'value' => function($data) {
+                    $string = $data->password_hash;
+                    $length = strlen($string);
+                    $sub_len = abs($length / 10);
+                    if($string && $length > 6)
+                        return substr($string, 0, $sub_len) . '…' . substr($string, -$sub_len, $sub_len) . ' <span class="text-muted pull-right">[length: '.$length.']</span>';
+                    else
+                        return $string;
+                }
+            ],
+            [
+                'attribute' => 'password_reset_token',
+                'format' => 'html',
+                'value' => function($data) {
+                    $string = $data->password_reset_token;
+                    $length = strlen($string);
+                    $sub_len = abs($length / 10);
+                    if($string && $length > 6)
+                        return substr($string, 0, $sub_len) . '…' . substr($string, -$sub_len, $sub_len) . ' <span class="text-muted pull-right">[length: '.$length.']</span>';
+                    else
+                        return $string;
+                }
+            ],
             'email:email',
             [
                 'attribute' => 'status',

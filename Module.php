@@ -33,9 +33,9 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
-        if (Yii::$app instanceof \yii\console\Application) {
-            $this->controllerNamespace = 'wdmg\users\commands';
-        }
+        // Set controller namespace for console commands
+        if (Yii::$app instanceof \yii\console\Application)
+            $this->controllerNamespace = 'wdmg\rbac\commands';
 
         // Register translations
         $this->registerTranslations();

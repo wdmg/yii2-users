@@ -6,6 +6,10 @@
   "license": "MIT",
   "version": "1.0.0",
   "homepage": "https://github.com/wdmg/yii2-users",
+  "support": {
+    "source": "https://github.com/wdmg/yii2-users",
+    "issues": "https://github.com/wdmg/yii2-users/issues"
+  },
   "authors": [
     {
       "name": "Alexsander Vyshnyvetskyy",
@@ -17,7 +21,7 @@
     }
   ],
   "require": {
-    "yiisoft/yii2": "^2.0.10",
+    "yiisoft/yii2": "^2.0.13"
     "wdmg/yii2-helpers": "^1.0.0"
   },
   "minimum-stability": "dev",

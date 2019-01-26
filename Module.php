@@ -27,6 +27,11 @@ class Module extends \yii\base\Module
     public $vendor = "wdmg";
 
     /**
+     * @var string the module version
+     */
+    public $version = "1.0.0";
+
+    /**
      * @var array of strings missing translations
      */
     public $missingTranslation;
@@ -41,6 +46,9 @@ class Module extends \yii\base\Module
         // Set controller namespace for console commands
         if (Yii::$app instanceof \yii\console\Application)
             $this->controllerNamespace = 'wdmg\rbac\commands';
+
+        // Set current version of module
+        $this->setVersion($this->version);
 
         // Register translations
         $this->registerTranslations();

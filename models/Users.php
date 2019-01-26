@@ -3,6 +3,7 @@
 namespace wdmg\users\models;
 
 use Yii;
+use \yii\behaviors\TimeStampBehavior;
 
 /**
  * This is the model class for table "users".
@@ -33,6 +34,25 @@ class Users extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{users}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    self::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => function() {
+                    return date("Y-m-d H:i:s");
+                }
+            ],
+        ];
     }
 
     /**

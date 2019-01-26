@@ -20,6 +20,7 @@ return [
     'Disabled' => 'Не активный',
     'Deleted' => 'Удален',
 
+    'Add new user' => 'Добавить пользователя',
     'Users search' => 'Поиск пользователей',
 
     'View user: {name}' => 'Просмотр пользователя: {name}',

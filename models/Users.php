@@ -81,6 +81,39 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        // Attach default role to new user
+        $authManager = Yii::$app->getAuthManager();
+        if($authManager) {
+            foreach ($authManager->defaultRoles as $role) {
+                $role = $authManager->getRole($role);
+                $authManager->assign($role, $this->getId());
+            }
+        }
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        // Deattach all user roles
+        $authManager = Yii::$app->getAuthManager();
+        if($authManager) {
+            $authManager->revokeAll($this->getId());
+        }
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [

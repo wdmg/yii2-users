@@ -26,7 +26,7 @@ class UsersPasswordRequest extends Model
             ['email', 'exist',
                 'targetClass' => '\wdmg\users\models\Users',
                 'filter' => ['status' => Users::USR_STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => Yii::t('app/modules/users', 'There is no user with this email address.')
             ],
         ];
     }
@@ -38,6 +38,10 @@ class UsersPasswordRequest extends Model
      */
     public function sendEmail()
     {
+
+        /* @var $module, array of current module */
+        $module = Yii::$app->getModule('users', false);
+
         /* @var $user User */
         $user = Users::findOne([
             'status' => Users::USR_STATUS_ACTIVE,
@@ -58,12 +62,14 @@ class UsersPasswordRequest extends Model
         return Yii::$app
             ->mailer
             ->compose(
-                ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
+                ['html' => $module->options["passwordReset"]["emailViewPath"]["html"], 'text' => $module->options["passwordReset"]["emailViewPath"]["text"]],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
             ->setTo($this->email)
-            ->setSubject('Password reset for ' . Yii::$app->name)
+            ->setSubject(Yii::t('app/modules/users', 'Password reset for {appname}', [
+                'appname' => Yii::$app->name,
+            ]))
             ->send();
 
     }

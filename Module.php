@@ -37,6 +37,19 @@ class Module extends \yii\base\Module
     public $missingTranslation;
 
     /**
+     * @var array, options of module
+     */
+    public $options = [
+        "rememberDuration" => (3600 * 24 * 30),
+        "passwordReset" => [
+            "emailViewPath" => [
+                "html" => "@vendor/wdmg/yii2-users/mail/passwordReset-html",
+                "text" => "@vendor/wdmg/yii2-users/mail/passwordReset-text",
+            ],
+        ],
+    ];
+
+    /**
      * {@inheritdoc}
      */
     public function init()

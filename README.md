@@ -23,14 +23,14 @@ And select the operation you want to perform:
 
 \* - The demo database contains 6 demo user`s with:
 
-| ID   | Username  | Password  | Email               | Status        |
-| ---- | --------- | --------- | ------------------- | ------------- |
-| 100  | admin     | admin     | admin@example.com   |               |
-| 101  | demo      | demo      | demo@example.com    |               |
-| 102  | alice     | alice     | alice@example.com   |               |
-| 103  | bob       | bob       | bob@example.com     |               |
-| 104  | johndoe   | johndoe   | johndoe@example.com | `diactivated` |
-| 105  | janedoe   | janedoe   | janedoe@example.com | `diactivated` |
+| ID   | Username  | Password        | Email               | Status        |
+| ---- | --------- | --------------- | ------------------- | ------------- |
+| 100  | admin     | adminadmin      | admin@example.com   |               |
+| 101  | demo      | demodemo        | demo@example.com    |               |
+| 102  | alice     | alicealice      | alice@example.com   |               |
+| 103  | bob       | bobbob          | bob@example.com     |               |
+| 104  | johndoe   | johndoejohndoe  | johndoe@example.com | `diactivated` |
+| 105  | janedoe   | janedoejanedoe  | janedoe@example.com | `diactivated` |
 
 # Migrations
 In any case, you can execute the migration and create the initial data, run the following command in the console:
@@ -46,11 +46,20 @@ To add a module to the project, add the following data in your configuration fil
         'tickets' => [
             'class' => 'wdmg\users\Module',
             'routePrefix' => 'admin'
+            'options' => [
+                "rememberDuration" => (3600 * 24 * 30),
+                "passwordReset" => [
+                    "emailViewPath" => [
+                        "html" => "@vendor/wdmg/yii2-users/mail/passwordReset-html",
+                        "text" => "@vendor/wdmg/yii2-users/mail/passwordReset-text",
+                    ],
+                ],
+            ],
         ],
         ...
     ],
 
-and Bootstrap section:
+If you have connected the module not via a composer add Bootstrap section:
 
 `
 $config['bootstrap'][] = 'wdmg\users\Bootstrap';

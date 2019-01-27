@@ -11,7 +11,9 @@ $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/modules/users', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ucfirst($this->title);
 \yii\web\YiiAsset::register($this);
+
 ?>
+
 <div class="page-header">
     <h1><?= Html::encode($this->title) ?> <small class="text-muted pull-right">[v.<?= $this->context->module->version ?>]</small></h1>
 </div>

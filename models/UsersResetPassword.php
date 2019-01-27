@@ -29,13 +29,15 @@ class UsersResetPassword extends Model
      */
     public function __construct($token, $config = [])
     {
-        if (empty($token) || !is_string($token)) {
-            throw new InvalidArgumentException('Password reset token cannot be blank.');
-        }
+        if (empty($token) || !is_string($token))
+            throw new InvalidArgumentException(Yii::t('app/modules/users', 'Password reset token cannot be blank.'));
+
+
         $this->_user = Users::findByPasswordResetToken($token);
-        if (!$this->_user) {
-            throw new InvalidArgumentException('Wrong password reset token.');
-        }
+
+        if (!$this->_user)
+            throw new InvalidArgumentException(Yii::t('app/modules/users', 'Wrong password reset token.'));
+
         parent::__construct($config);
     }
 

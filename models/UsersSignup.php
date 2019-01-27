@@ -5,6 +5,7 @@ namespace wdmg\users\models;
 use Yii;
 use yii\base\Model;
 use wdmg\users\models\Users;
+use wdmg\validators\StopListValidator;
 
 class UsersSignup extends Model
 {
@@ -20,7 +21,7 @@ class UsersSignup extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => Users::className(), 'message' => Yii::t('app/modules/users', 'This username has already been taken.')],
+            [['username'], StopListValidator::className(), 'stoplist' => ['admin', 'editor', 'manager']],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
@@ -48,11 +49,21 @@ class UsersSignup extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
 
-        return $user->save() ? $user : null;
+        if ($user->save()) {
 
-        if ($user->save())
+            // Assign default role to new user
+            $authManager = Yii::$app->getAuthManager();
+            if($authManager) {
+                foreach ($authManager->defaultRoles as $role) {
+                    $role = $authManager->getRole($role);
+                    $authManager->assign($role, $user->getId());
+                }
+            }
+
             return $user;
-        else
+        } else {
             return null;
+        }
+
     }
 }

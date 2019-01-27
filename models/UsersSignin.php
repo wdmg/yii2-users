@@ -10,7 +10,6 @@ class UsersSignin extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-    public $rememberDuration = (3600 * 24 * 30);
     private $_user;
 
     /**
@@ -54,8 +53,17 @@ class UsersSignin extends Model
      */
     public function login()
     {
+
+        /* @var $module, array of current module */
+        $module = Yii::$app->getModule('users', false);
+
+        if($module->options["rememberDuration"])
+            $duration = intval($module->options["rememberDuration"]);
+        else
+            $duration = (3600 * 24 * 30);
+
         if ($this->validate())
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? intval($this->rememberDuration) : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $duration : 0);
 
         return false;
     }

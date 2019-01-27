@@ -63,7 +63,7 @@ class InitController extends Controller
                     'id' => (100+$i),
                     'username' => $user,
                     'auth_key' => Yii::$app->security->generateRandomString(),
-                    'password_hash' => Yii::$app->security->generatePasswordHash($user),
+                    'password_hash' => Yii::$app->security->generatePasswordHash($user.$user),
                     'password_reset_token' => null,
                     'email' => $user . '@example.com',
                     'status' => $status,

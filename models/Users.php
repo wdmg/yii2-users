@@ -266,4 +266,38 @@ class Users extends ActiveRecord implements IdentityInterface
         return $this->findAll(['status' => Users::USR_STATUS_ACTIVE]);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoles()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if($authManager)
+            return $authManager->getRolesByUser($this->id);
+        else
+            return null;
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssignments()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if($authManager)
+            return $authManager->getAssignments($this->id);
+        else
+            return null;
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPermissions()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if($authManager)
+            return $authManager->getPermissionsByUser($this->id);
+        else
+            return null;
+    }
+
 }

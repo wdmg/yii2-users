@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -78,7 +80,7 @@ class UsersController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
         ]);
     }
 

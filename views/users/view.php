@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ListView;
 use yii\widgets\DetailView;
 use wdmg\helpers\DateAndTime;
 
@@ -64,6 +65,39 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                 }
             ],
             'email:email',
+            [
+                'attribute' => 'roles',
+                'format' => 'html',
+                'value' => function($data) {
+                    $output = '<ul class="list-unstyled">';
+                    foreach($data->roles as $role) {
+                        $output .= "<li>" . Html::a($role->name, ['../rbac/roles/view', 'id' => $role->name], ['class' => '']) . "</li>";
+                    }
+                    return $output . "</ul>";
+                },
+            ],
+            [
+                'attribute' => 'permissions',
+                'format' => 'html',
+                'value' => function($data) {
+                    $output = '<ul class="list-unstyled">';
+                    foreach($data->permissions as $permission) {
+                        $output .= "<li>" . Html::a($permission->name, ['../rbac/roles/view', 'id' => $permission->name], ['class' => '']) . "</li>";
+                    }
+                    return $output . "</ul>";
+                },
+            ],
+            [
+                'attribute' => 'assignments',
+                'format' => 'html',
+                'value' => function($data) {
+                    $output = '<ul class="list-unstyled">';
+                    foreach($data->assignments as $assignments) {
+                        $output .= "<li>" . Html::a($assignments->roleName, ['../rbac/assignments/view', 'user_id' => $data->id, 'item_name' => $assignments->roleName], ['class' => '']) . "</li>";
+                    }
+                    return $output . "</ul>";
+                },
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'html',

@@ -1,8 +1,8 @@
 Changelog
 =========
 
-
 ## 1.0.1 (2019-01-27)
+ * Bugfix and refactoring
  * Added email template for restore password
  * Added username custom validation
  * Autosign user role when signup

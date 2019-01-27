@@ -89,4 +89,12 @@ class Users extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app/modules/users', 'Updated at'),
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAllUsers()
+    {
+        return $this->findAll(['status' => Users::USR_STATUS_ACTIVE]);
+    }
 }

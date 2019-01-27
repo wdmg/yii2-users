@@ -41,8 +41,14 @@ In any case, you can execute the migration and create the initial data, run the 
 
 To add a module to the project, add the following data in your configuration file:
 
-    'modules' => [
+    
+    'components' => [
+        'user' => [
+            'identityClass' => 'wdmg\users\models\Users',
+        ],
         ...
+    ],
+    'modules' => [
         'tickets' => [
             'class' => 'wdmg\users\Module',
             'routePrefix' => 'admin'

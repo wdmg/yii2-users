@@ -72,7 +72,7 @@ $config['bootstrap'][] = 'wdmg\users\Bootstrap';
 `
 
 # Routing
-`http://example.com/admin/users` - Module dashboard
+`/admin/users` - Module dashboard
 
 # Status and version
-* v.1.0.0 - Module in progress development.
+* v.1.0.1 - Module in progress development.

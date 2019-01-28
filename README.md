@@ -53,11 +53,23 @@ To add a module to the project, add the following data in your configuration fil
             'class' => 'wdmg\users\Module',
             'routePrefix' => 'admin'
             'options' => [
-                "rememberDuration" => (3600 * 24 * 30),
-                "passwordReset" => [
-                    "emailViewPath" => [
-                        "html" => "@vendor/wdmg/yii2-users/mail/passwordReset-html",
-                        "text" => "@vendor/wdmg/yii2-users/mail/passwordReset-text",
+                'rememberDuration' => (3600 * 24 * 30),
+                'signupConfirmation' => [
+                    'needConfirmation' => false,
+                    'checkTokenRoute' => 'site/signup-confirm',
+                    'supportEmail' => 'noreply@example.com',
+                    'emailViewPath' => [
+                        'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
+                        'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
+                    ],
+                ],
+                'passwordReset' => [
+                    'resetTokenExpire' => 3600,
+                    'checkTokenRoute' => 'site/reset-password',
+                    'supportEmail' => 'noreply@example.com',
+                    'emailViewPath' => [
+                        'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
+                        'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
                     ],
                 ],
             ],
@@ -71,8 +83,11 @@ If you have connected the module not via a composer add Bootstrap section:
 $config['bootstrap'][] = 'wdmg\users\Bootstrap';
 `
 
+# Usage
+See the [USECASES.md](https://github.com/wdmg/yii2-users/blob/master/LICENSE) for more details.
+
 # Routing
 `/admin/users` - Module dashboard
 
 # Status and version
-* v.1.0.1 - Module in progress development.
+* v.1.0.2 - Module in progress development.

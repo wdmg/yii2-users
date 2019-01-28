@@ -54,18 +54,31 @@ class UsersSignin extends Model
     public function login()
     {
 
-        /* @var $module, array of current module */
-        $module = Yii::$app->getModule('users', false);
+        if ($this->validate()) {
 
-        if($module->options["rememberDuration"])
-            $duration = intval($module->options["rememberDuration"]);
-        else
-            $duration = (3600 * 24 * 30);
+            /* @var $module, array of current module */
+            $module = Yii::$app->getModule('users', false);
 
-        if ($this->validate())
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $duration : 0);
+            // Get time to remember user
+            if($module->options["rememberDuration"])
+                $duration = intval($module->options["rememberDuration"]);
+            else
+                $duration = (3600 * 24 * 30);
 
-        return false;
+            $user = $this->getUser();
+
+            if ($user->status === Users::USR_STATUS_ACTIVE)
+                return Yii::$app->user->login($user, $this->rememberMe ? $duration : 0);
+
+            if ($user->status === Users::USR_STATUS_WAITING)
+                throw new \DomainException(Yii::t('app/modules/users', 'Registration is not complete. Confirm the email address of the link from the letter.'));
+
+            if ($user->status === Users::USR_STATUS_BLOCKED)
+                throw new \DomainException(Yii::t('app/modules/users', 'The user has been blocked by the administrator.'));
+
+        } else {
+            return false;
+        }
     }
 
     /**

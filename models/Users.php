@@ -27,10 +27,12 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**
      * Ticket status
-     * const, int: 0 - Deleted user, 10 - Active user
+     * const, int: 0 - Inactive user, 10 - Active user, 20 - Blocked user
      */
     const USR_STATUS_DELETED = 0;
+    const USR_STATUS_WAITING = 5;
     const USR_STATUS_ACTIVE = 10;
+    const USR_STATUS_BLOCKED = 15;
 
     /**
      * {@inheritdoc}
@@ -74,7 +76,8 @@ class Users extends ActiveRecord implements IdentityInterface
             [['password_reset_token'], 'unique'],
             [['status'], 'integer'],
             [['status'], 'default', 'value' => self::USR_STATUS_ACTIVE],
-            [['status'], 'in', 'range' => [self::USR_STATUS_ACTIVE, self::USR_STATUS_DELETED]],
+            [['status'], 'in', 'range' => [self::USR_STATUS_DELETED, self::USR_STATUS_WAITING, self::USR_STATUS_ACTIVE, self::USR_STATUS_BLOCKED]],
+
         ];
     }
 
@@ -86,13 +89,13 @@ class Users extends ActiveRecord implements IdentityInterface
         parent::afterSave($insert, $changedAttributes);
 
         // Attach default role to new user
-        $authManager = Yii::$app->getAuthManager();
+        /*$authManager = Yii::$app->getAuthManager();
         if($authManager) {
             foreach ($authManager->defaultRoles as $role) {
                 $role = $authManager->getRole($role);
                 $authManager->assign($role, $this->getId());
             }
-        }
+        }*/
 
     }
 
@@ -104,10 +107,10 @@ class Users extends ActiveRecord implements IdentityInterface
         parent::afterDelete();
 
         // Deattach all user roles
-        $authManager = Yii::$app->getAuthManager();
+        /*$authManager = Yii::$app->getAuthManager();
         if($authManager) {
             $authManager->revokeAll($this->getId());
-        }
+        }*/
 
     }
 
@@ -126,6 +129,9 @@ class Users extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('app/modules/users', 'Status'),
             'created_at' => Yii::t('app/modules/users', 'Created at'),
             'updated_at' => Yii::t('app/modules/users', 'Updated at'),
+            'roles' => Yii::t('app/modules/users', 'Roles'),
+            'permissions' => Yii::t('app/modules/users', 'Permissions'),
+            'assignments' => Yii::t('app/modules/users', 'Assignments'),
         ];
     }
 
@@ -183,9 +189,16 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         if (empty($token))
             return false;
+        /* @var $module, array of current module */
+        $module = Yii::$app->getModule('users', false);
+
+        // Get time to expire reset token
+        if($module->options["passwordReset"]["resetTokenExpire"])
+            $expire = intval($module->options["passwordReset"]["resetTokenExpire"]);
+        else
+            $expire = Yii::$app->params['user.passwordResetTokenExpire'];
 
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
@@ -272,8 +285,9 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getRoles()
     {
         $authManager = Yii::$app->getAuthManager();
+
         if($authManager)
-            return $authManager->getRolesByUser($this->id);
+            return $authManager->getRolesByUser($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
     }
@@ -283,8 +297,9 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getAssignments()
     {
         $authManager = Yii::$app->getAuthManager();
+
         if($authManager)
-            return $authManager->getAssignments($this->id);
+            return $authManager->getAssignments($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
     }
@@ -294,8 +309,9 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getPermissions()
     {
         $authManager = Yii::$app->getAuthManager();
+
         if($authManager)
-            return $authManager->getPermissionsByUser($this->id);
+            return $authManager->getPermissionsByUser($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
     }

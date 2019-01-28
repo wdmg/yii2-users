@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 1.0.2 (2019-01-29)
+ * Registration confirmation functionality
+ * Added module options
+
 ## 1.0.1 (2019-01-27)
  * Bugfix and refactoring
  * Added email template for restore password

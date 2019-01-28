@@ -42,6 +42,16 @@ class UsersPasswordRequest extends Model
         /* @var $module, array of current module */
         $module = Yii::$app->getModule('users', false);
 
+        // Get route for build reset link
+        $linkRoute = $module->options["passwordReset"]["checkTokenRoute"];
+        if(!$linkRoute)
+            $linkRoute = Yii::$app->requestedRoute;
+
+        // Get sender`s email adress
+        $supportEmail = $module->options["passwordReset"]["supportEmail"];
+        if(!$supportEmail)
+            $supportEmail = Yii::$app->params['supportEmail'];
+
         /* @var $user User */
         $user = Users::findOne([
             'status' => Users::USR_STATUS_ACTIVE,
@@ -63,9 +73,9 @@ class UsersPasswordRequest extends Model
             ->mailer
             ->compose(
                 ['html' => $module->options["passwordReset"]["emailViewPath"]["html"], 'text' => $module->options["passwordReset"]["emailViewPath"]["text"]],
-                ['user' => $user]
+                ['user' => $user, 'linkRoute' => $linkRoute]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
+            ->setFrom([$supportEmail => Yii::$app->name])
             ->setTo($this->email)
             ->setSubject(Yii::t('app/modules/users', 'Password reset for {appname}', [
                 'appname' => Yii::$app->name,

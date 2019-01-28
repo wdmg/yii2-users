@@ -3,7 +3,7 @@
 namespace wdmg\users;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 
 /**
  * users module definition class
@@ -29,7 +29,7 @@ class Module extends \yii\base\Module
     /**
      * @var string the module version
      */
-    public $version = "1.0.1";
+    public $version = "1.0.2";
 
     /**
      * @var array of strings missing translations
@@ -39,15 +39,7 @@ class Module extends \yii\base\Module
     /**
      * @var array, options of module
      */
-    public $options = [
-        "rememberDuration" => (3600 * 24 * 30),
-        "passwordReset" => [
-            "emailViewPath" => [
-                "html" => "@vendor/wdmg/yii2-users/mail/passwordReset-html",
-                "text" => "@vendor/wdmg/yii2-users/mail/passwordReset-text",
-            ],
-        ],
-    ];
+    public $options = [];
 
     /**
      * {@inheritdoc}
@@ -59,6 +51,33 @@ class Module extends \yii\base\Module
         // Set controller namespace for console commands
         if (Yii::$app instanceof \yii\console\Application)
             $this->controllerNamespace = 'wdmg\users\commands';
+
+        // Set default options
+        $default = [
+            'rememberDuration' => (3600 * 24 * 30),
+            'signupConfirmation' => [
+                'needConfirmation' => false,
+                'checkTokenRoute' => 'site/signup-confirm',
+                'supportEmail' => 'noreply@example.com',
+                'emailViewPath' => [
+                    'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
+                    'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
+                ],
+            ],
+            'passwordReset' => [
+                'resetTokenExpire' => 3600,
+                'checkTokenRoute' => 'site/reset-password',
+                'supportEmail' => 'noreply@example.com',
+                'emailViewPath' => [
+                    'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
+                    'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
+                ],
+            ],
+        ];
+
+        // Mixing default options with custom options
+        $this->options = ArrayHelper::merge($default, $this->options);
+
 
         // Set current version of module
         $this->setVersion($this->version);

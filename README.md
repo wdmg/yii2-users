@@ -84,7 +84,7 @@ $config['bootstrap'][] = 'wdmg\users\Bootstrap';
 `
 
 # Usage
-See the [USECASES.md](https://github.com/wdmg/yii2-users/blob/master/LICENSE) for more details.
+See the [USECASES.md](https://github.com/wdmg/yii2-users/blob/master/USECASES.md) for more details.
 
 # Routing
 `/admin/users` - Module dashboard

@@ -23,8 +23,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList([
-        $model::USR_STATUS_ACTIVE => Yii::t('app/modules/users','Active'),
         $model::USR_STATUS_DELETED => Yii::t('app/modules/users','Deleted'),
+        $model::USR_STATUS_WAITING => Yii::t('app/modules/users','Waiting'),
+        $model::USR_STATUS_ACTIVE => Yii::t('app/modules/users','Active'),
+        $model::USR_STATUS_BLOCKED => Yii::t('app/modules/users','Blocked'),
+
     ]); ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>

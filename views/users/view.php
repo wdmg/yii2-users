@@ -103,10 +103,14 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                 'format' => 'html',
                 'value' => function($data) {
 
-                    if ($data->status == $data::USR_STATUS_DELETED)
-                        return '<span class="label label-danger">'.Yii::t('app/modules/users','Deleted').'</span>';
+                    if ($data->status == $data::USR_STATUS_BLOCKED)
+                        return '<span class="label label-danger">'.Yii::t('app/modules/users','Blocked').'</span>';
                     elseif ($data->status == $data::USR_STATUS_ACTIVE)
                         return '<span class="label label-success">'.Yii::t('app/modules/users','Active').'</span>';
+                    elseif ($data->status == $data::USR_STATUS_DELETED)
+                        return '<span class="label label-default">'.Yii::t('app/modules/users','Deleted').'</span>';
+                    elseif ($data->status == $data::USR_STATUS_WAITING)
+                        return '<span class="label label-warning">'.Yii::t('app/modules/users','Waiting').'</span>';
                     else
                         return false;
 

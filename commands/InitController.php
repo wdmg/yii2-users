@@ -59,7 +59,7 @@ class InitController extends Controller
                 if($i >= 4)
                     $status = 0;
 
-                Yii::$app->db->createCommand()->insert('{{users}}', [
+                Yii::$app->db->createCommand()->insert('{{%users}}', [
                     'id' => (100+$i),
                     'username' => $user,
                     'auth_key' => Yii::$app->security->generateRandomString(),

@@ -89,5 +89,8 @@ See the [USECASES.md](https://github.com/wdmg/yii2-users/blob/master/USECASES.md
 # Routing
 `/admin/users` - Module dashboard
 
-# Status and version
-* v.1.0.2 - Module in progress development.
+# Status and version [in progress development]
+* v.1.0.3 - Fixing tables names in migrations
+* v.1.0.2 - Registration confirmation functionality
+* v.1.0.1 - Signup & signin functionality
+* v.1.0.0 - First pre-release

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 1.0.3 (2019-02-28)
+ * Added module priority of initialization
+ * Fixing tables names in migrations
+ 
 ## 1.0.2 (2019-01-29)
  * Registration confirmation functionality
  * Added module options

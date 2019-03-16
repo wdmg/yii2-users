@@ -87,9 +87,21 @@ $config['bootstrap'][] = 'wdmg\users\Bootstrap';
 See the [USECASES.md](https://github.com/wdmg/yii2-users/blob/master/USECASES.md) for more details.
 
 # Routing
-`/admin/users` - Module dashboard
+Use the `Module::dashboardNavItems()` method of the module to generate a navigation items list for NavBar, like this:
+
+    <?php
+        echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+            'label' => 'Modules',
+            'items' => [
+                Yii::$app->getModule('users')->dashboardNavItems(),
+                ...
+            ]
+        ]);
+    ?>
 
 # Status and version [in progress development]
+* v.1.0.4 - Added dashboard navigation items for NavBar
 * v.1.0.3 - Fixing tables names in migrations
 * v.1.0.2 - Registration confirmation functionality
 * v.1.0.1 - Signup & signin functionality

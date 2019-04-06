@@ -2,6 +2,18 @@
 
 namespace wdmg\users;
 
+/**
+ * Yii2 Users
+ *
+ * @category        Module
+ * @version         1.0.4
+ * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
+ * @link            https://github.com/wdmg/yii2-users
+ * @copyright       Copyright (c) 2019 W.D.M.Group, Ukraine
+ * @license         https://opensource.org/licenses/MIT Massachusetts Institute of Technology (MIT) License
+ *
+ */
+
 use Yii;
 use yii\helpers\ArrayHelper;
 

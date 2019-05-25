@@ -14,10 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?> <small class="text-muted pull-right">[v.<?= $this->context->module->version ?>]</small></h1>
 </div>
 <div class="users-index">
-
     <?php Pjax::begin(); ?>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -66,7 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <div>
-        <!-- ?= Html::a(Yii::t('app/modules/users', '&larr; Back to module'), ['../admin/users'], ['class' => 'btn btn-default pull-left']) ? -->
         <?= Html::a(Yii::t('app/modules/users', 'Add new user'), ['create'], ['class' => 'btn btn-success pull-right']) ?>
     </div>
 <?php Pjax::end(); ?>

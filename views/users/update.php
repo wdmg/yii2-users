@@ -8,8 +8,8 @@ use yii\helpers\Html;
 $this->title = Yii::t('app/modules/users', 'Update user: {name}', [
     'name' => $model->username,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app/modules/users', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => ucfirst($model->username), 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $this->context->module->name, 'url' => ['users/index']];
+$this->params['breadcrumbs'][] = ['label' => ucfirst($model->username), 'url' => ['users/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app/modules/users', 'Update');
 ?>
 <div class="page-header">

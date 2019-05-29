@@ -6,6 +6,7 @@ use Yii;
 use \yii\db\ActiveRecord;
 use \yii\web\IdentityInterface;
 use \yii\behaviors\TimeStampBehavior;
+use \yii\base\NotSupportedException;
 
 
 /**
@@ -148,7 +149,9 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['access_token' => $token]);
+        //return static::findOne(['auth_key' => $token]);
+        throw new NotSupportedException('Method "findIdentityByAccessToken" is not implemented.');
+        return null;
     }
 
     /**

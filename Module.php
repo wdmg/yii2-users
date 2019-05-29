@@ -6,7 +6,7 @@ namespace wdmg\users;
  * Yii2 Users
  *
  * @category        Module
- * @version         1.0.4
+ * @version         1.1.0
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-users
  * @copyright       Copyright (c) 2019 W.D.M.Group, Ukraine
@@ -34,6 +34,16 @@ class Module extends \yii\base\Module
     public $routePrefix = "admin";
 
     /**
+     * @var string, the name of module
+     */
+    public $name = "Users";
+
+    /**
+     * @var string, the description of module
+     */
+    public $description = "Users management module";
+
+    /**
      * @var string the vendor name of module
      */
     private $vendor = "wdmg";
@@ -41,7 +51,7 @@ class Module extends \yii\base\Module
     /**
      * @var string the module version
      */
-    private $version = "1.0.4";
+    private $version = "1.1.0";
 
     /**
      * @var integer, priority of initialization
@@ -143,6 +153,10 @@ class Module extends \yii\base\Module
 
             },
         ];
+
+        // Name and description translation of module
+        $this->name = Yii::t('app/modules/users', $this->name);
+        $this->description = Yii::t('app/modules/users', $this->description);
     }
 
     public static function t($category, $message, $params = [], $language = null)
@@ -171,7 +185,7 @@ class Module extends \yii\base\Module
     public function dashboardNavItems()
     {
         return [
-            'label' => Yii::t('app/modules/users', 'Users'),
+            'label' => $this->name,
             'url' => [$this->routePrefix . '/users/'],
             'active' => in_array(\Yii::$app->controller->module->id, ['users'])
         ];

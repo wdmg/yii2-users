@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel wdmg\users\models\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app/modules/users', 'Users');
+$this->title = $this->context->module->name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-header">

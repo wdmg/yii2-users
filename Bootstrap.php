@@ -20,16 +20,39 @@ class Bootstrap implements BootstrapInterface
         $module = Yii::$app->getModule('users');
 
         // Get URL path prefix if exist
-        $prefix = (isset($module->routePrefix) ? $module->routePrefix . '/' : '');
+        if (isset($module->routePrefix)) {
+            $app->getUrlManager()->enableStrictParsing = true;
+            $prefix = $module->routePrefix . '/';
+        } else {
+            $prefix = '';
+        }
 
         // Add module URL rules
         $app->getUrlManager()->addRules(
             [
-                $prefix.'<controller:(users)>/' => 'users/<controller>/index',
-                $prefix.'users/<controller:(users)>/<action:\w+>' => 'users/<controller>/<action>',
-                $prefix.'<controller:(users)>/<action:\w+>' => 'users/<controller>/<action>',
+                $prefix . '<module:users>/' => '<module>/users/index',
+                $prefix . '<module:users>/view' => '<module>/users/view',
+                $prefix . '<module:users>/<controller:(users)>/' => '<module>/<controller>',
+                $prefix . '<module:users>/<controller:(users)>/<action:\w+>' => '<module>/<controller>/<action>',
+                [
+                    'pattern' => $prefix . '<module:users>/',
+                    'route' => '<module>/users/index',
+                    'suffix' => '',
+                ], [
+                'pattern' => $prefix . '<module:users>/view',
+                'route' => '<module>/users/view',
+                'suffix' => '',
+            ], [
+                'pattern' => $prefix . '<module:users>/<controller:(users)>/',
+                'route' => '<module>/<controller>',
+                'suffix' => '',
+            ], [
+                'pattern' => $prefix . '<module:users>/<controller:(users)>/<action:\w+>',
+                'route' => '<module>/<controller>/<action>',
+                'suffix' => '',
             ],
-            false
+            ],
+            true
         );
     }
 }

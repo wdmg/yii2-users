@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model wdmg\users\models\Users */
 
 $this->title = Yii::t('app/modules/users', 'Create Users');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app/modules/users', 'Users'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->context->module->name, 'url' => ['users/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-header">

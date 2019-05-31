@@ -5,7 +5,7 @@ Users management module for Yii2
 
 # Requirements 
 * PHP 5.6 or higher
-* Yii2 v.2.0.13 and newest
+* Yii2 v.2.0.19 and newest
 
 # Installation
 To install the module, run the following command in the console:
@@ -101,5 +101,5 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [in progress development]
+* v.1.1.1 - Update Yii2 version
 * v.1.1.0 - Added module name and description, translations. Routing fix.
-* v.1.0.4 - Added dashboard navigation items for NavBar

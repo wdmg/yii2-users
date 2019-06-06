@@ -56,12 +56,15 @@ class UsersSignin extends Model
 
         if ($this->validate()) {
 
-            /* @var $module, array of current module */
-            $module = Yii::$app->getModule('users', false);
+            // Get current module
+            if (Yii::$app->hasModule('admin/users'))
+                $module = Yii::$app->getModule('admin/users');
+            else
+                $module = Yii::$app->getModule('users');
 
             // Get time to remember user
-            if($module->options["rememberDuration"])
-                $duration = intval($module->options["rememberDuration"]);
+            if($module->rememberDuration)
+                $duration = intval($module->rememberDuration);
             else
                 $duration = (3600 * 24 * 30);
 

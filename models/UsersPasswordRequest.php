@@ -39,16 +39,19 @@ class UsersPasswordRequest extends Model
     public function sendEmail()
     {
 
-        /* @var $module, array of current module */
-        $module = Yii::$app->getModule('users', false);
+        // Get current module
+        if (Yii::$app->hasModule('admin/users'))
+            $module = Yii::$app->getModule('admin/users');
+        else
+            $module = Yii::$app->getModule('users');
 
         // Get route for build reset link
-        $linkRoute = $module->options["passwordReset"]["checkTokenRoute"];
+        $linkRoute = $module->passwordReset["checkTokenRoute"];
         if(!$linkRoute)
             $linkRoute = Yii::$app->requestedRoute;
 
         // Get sender`s email adress
-        $supportEmail = $module->options["passwordReset"]["supportEmail"];
+        $supportEmail = $module->passwordReset["supportEmail"];
         if(!$supportEmail)
             $supportEmail = Yii::$app->params['supportEmail'];
 
@@ -72,7 +75,7 @@ class UsersPasswordRequest extends Model
         return Yii::$app
             ->mailer
             ->compose(
-                ['html' => $module->options["passwordReset"]["emailViewPath"]["html"], 'text' => $module->options["passwordReset"]["emailViewPath"]["text"]],
+                ['html' => $module->passwordReset["emailViewPath"]["html"], 'text' => $module->passwordReset["emailViewPath"]["text"]],
                 ['user' => $user, 'linkRoute' => $linkRoute]
             )
             ->setFrom([$supportEmail => Yii::$app->name])

@@ -6,7 +6,7 @@ namespace wdmg\users;
  * Yii2 Users
  *
  * @category        Module
- * @version         1.1.3
+ * @version         1.1.4
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-users
  * @copyright       Copyright (c) 2019 W.D.M.Group, Ukraine
@@ -47,17 +47,32 @@ class Module extends BaseModule
     /**
      * @var string the module version
      */
-    private $version = "1.1.3";
+    private $version = "1.1.4";
 
     /**
      * @var integer, priority of initialization
      */
     private $priority = 5;
 
-    /**
-     * @var array, options of module
-     */
-    public $options = [];
+    public $rememberDuration = (3600 * 24 * 30);
+    public $signupConfirmation = [
+        'needConfirmation' => false,
+        'checkTokenRoute' => 'site/signup-confirm',
+        'supportEmail' => 'noreply@example.com',
+        'emailViewPath' => [
+            'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
+            'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
+        ],
+    ];
+    public $passwordReset = [
+        'resetTokenExpire' => 3600,
+        'checkTokenRoute' => 'site/reset-password',
+        'supportEmail' => 'noreply@example.com',
+        'emailViewPath' => [
+            'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
+            'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
+        ],
+    ];
 
     /**
      * {@inheritdoc}
@@ -66,33 +81,17 @@ class Module extends BaseModule
     {
         parent::init();
 
-        // Set default options
-        $default = [
-            'rememberDuration' => (3600 * 24 * 30),
-            'signupConfirmation' => [
-                'needConfirmation' => false,
-                'checkTokenRoute' => 'site/signup-confirm',
-                'supportEmail' => 'noreply@example.com',
-                'emailViewPath' => [
-                    'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
-                    'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
-                ],
-            ],
-            'passwordReset' => [
-                'resetTokenExpire' => 3600,
-                'checkTokenRoute' => 'site/reset-password',
-                'supportEmail' => 'noreply@example.com',
-                'emailViewPath' => [
-                    'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
-                    'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
-                ],
-            ],
-        ];
+        // Set version of current module
+        $this->setVersion($this->version);
 
-        // Mixing default options with custom options
-        $this->options = ArrayHelper::merge($default, $this->options);
+        // Set priority of current module
+        $this->setPriority($this->priority);
+
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function bootstrap($app)
     {
         parent::bootstrap($app);

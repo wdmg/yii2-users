@@ -49,11 +49,14 @@ class UsersSignup extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
 
-        /* @var $module, array of current module */
-        $module = Yii::$app->getModule('users', false);
+        // Get current module
+        if (Yii::$app->hasModule('admin/users'))
+            $module = Yii::$app->getModule('admin/users');
+        else
+            $module = Yii::$app->getModule('users');
 
         // Set status inactive and send confirmation email
-        if ($module->options["signupConfirmation"]["needConfirmation"]) {
+        if ($module->signupConfirmation["needConfirmation"]) {
             $user->email_confirm_token = Yii::$app->security->generateRandomString();
             $user->status = Users::USR_STATUS_WAITING;
             $this->sendEmailConfirmation($user);
@@ -85,23 +88,27 @@ class UsersSignup extends Model
 
     public function sendEmailConfirmation($user)
     {
-        /* @var $module, array of current module */
-        $module = Yii::$app->getModule('users', false);
+
+        // Get current module
+        if (Yii::$app->hasModule('admin/users'))
+            $module = Yii::$app->getModule('admin/users');
+        else
+            $module = Yii::$app->getModule('users');
 
         // Get route for build reset link
-        $linkRoute = $module->options["signupConfirmation"]["checkTokenRoute"];
+        $linkRoute = $module->signupConfirmation["checkTokenRoute"];
         if(!$linkRoute)
             $linkRoute = Yii::$app->requestedRoute;
 
         // Get sender`s email adress
-        $supportEmail = $module->options["signupConfirmation"]["supportEmail"];
+        $supportEmail = $module->signupConfirmation["supportEmail"];
         if(!$supportEmail)
             $supportEmail = Yii::$app->params['supportEmail'];
 
         $sent = Yii::$app
             ->mailer
             ->compose(
-                ['html' => $module->options["signupConfirmation"]["emailViewPath"]["html"], 'text' => $module->options["signupConfirmation"]["emailViewPath"]["text"]],
+                ['html' => $module->signupConfirmation["emailViewPath"]["html"], 'text' => $module->signupConfirmation["emailViewPath"]["text"]],
                 ['user' => $user, 'linkRoute' => $linkRoute]
             )
             ->setFrom([$supportEmail => Yii::$app->name])

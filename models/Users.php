@@ -192,12 +192,16 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         if (empty($token))
             return false;
-        /* @var $module, array of current module */
-        $module = Yii::$app->getModule('users', false);
+
+        // Get current module
+        if (Yii::$app->hasModule('admin/users'))
+            $module = Yii::$app->getModule('admin/users');
+        else
+            $module = Yii::$app->getModule('users');
 
         // Get time to expire reset token
-        if($module->options["passwordReset"]["resetTokenExpire"])
-            $expire = intval($module->options["passwordReset"]["resetTokenExpire"]);
+        if($module->passwordReset["resetTokenExpire"])
+            $expire = intval($module->passwordReset["resetTokenExpire"]);
         else
             $expire = Yii::$app->params['user.passwordResetTokenExpire'];
 

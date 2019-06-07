@@ -6,6 +6,7 @@ Users management module for Yii2
 # Requirements 
 * PHP 5.6 or higher
 * Yii2 v.2.0.20 and newest
+* [Yii2 Base](https://github.com/wdmg/yii2-base) module (required)
 
 # Installation
 To install the module, run the following command in the console:

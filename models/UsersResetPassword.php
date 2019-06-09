@@ -25,18 +25,25 @@ class UsersResetPassword extends Model
      *
      * @param string $token
      * @param array $config name-value pairs that will be used to initialize the object properties
+     * @param boolean $silent to check the muted mode
      * @throws InvalidArgumentException if token is empty or not valid
      */
-    public function __construct($token, $config = [])
+    public function __construct($token, $config = [], $silent = false)
     {
-        if (empty($token) || !is_string($token))
-            throw new InvalidArgumentException(Yii::t('app/modules/users', 'Password reset token cannot be blank.'));
-
+        if (empty($token) || !is_string($token)) {
+            if ($silent)
+                return false;
+            else
+                throw new InvalidArgumentException(Yii::t('app/modules/users', 'Password reset token cannot be blank.'));
+        }
 
         $this->_user = Users::findByPasswordResetToken($token);
-
-        if (!$this->_user)
-            throw new InvalidArgumentException(Yii::t('app/modules/users', 'Wrong password reset token.'));
+        if (!$this->_user) {
+            if ($silent)
+                return false;
+            else
+                throw new InvalidArgumentException(Yii::t('app/modules/users', 'Wrong password reset token.'));
+        }
 
         parent::__construct($config);
     }
@@ -50,6 +57,19 @@ class UsersResetPassword extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
+    }
+
+    /**
+     * Сhecks user is found
+     *
+     * @return boolean
+     */
+    public function userIsFound()
+    {
+        if ($this->_user)
+            return true;
+        else
+            return false;
     }
 
     /**

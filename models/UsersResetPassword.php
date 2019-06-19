@@ -55,7 +55,11 @@ class UsersResetPassword extends Model
     {
         return [
             ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 8],
+            ['password', 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => 'The password may contens min 1 char in uppercase.'],
+            ['password', 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => 'The password may contens min 1 char has number.'],
+            ['password', 'match', 'pattern' => '/(.*[a-z]){1,}.*/', 'message' => 'The password may contens min 1 char in lowercase.'],
+            ['password', 'match', 'pattern' => '/(.*[\W]){1,}.*/', 'message' => 'The password may contens min 1 special char.'],
         ];
     }
 

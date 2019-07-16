@@ -4,7 +4,7 @@
   "keywords": ["yii2", "yii2-users", "users", "users manager", "wdmg"],
   "type": "yii2-extension",
   "license": "MIT",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "homepage": "https://github.com/wdmg/yii2-users",
   "support": {
     "source": "https://github.com/wdmg/yii2-users",
@@ -30,6 +30,30 @@
   "autoload": {
     "psr-4": {
       "wdmg\\users\\": ""
+    }
+  },
+  "extra": {
+    "options": {
+      "routePrefix": "admin",
+      "rememberDuration": 86400,
+      "signupConfirmation": {
+        "needConfirmation": false,
+        "checkTokenRoute": "site/signup-confirm",
+        "supportEmail": "noreply@example.com",
+        "emailViewPath": {
+          "html": "@vendor/wdmg/yii2-users/mail/signupConfirmation-html",
+          "text": "@vendor/wdmg/yii2-users/mail/signupConfirmation-text"
+        }
+      },
+      "passwordReset": {
+        "resetTokenExpire": 3600,
+        "checkTokenRoute": "site/reset-password",
+        "supportEmail": "noreply@example.com",
+        "emailViewPath": {
+          "html": "@vendor/wdmg/yii2-users/mail/passwordReset-html",
+          "text": "@vendor/wdmg/yii2-users/mail/passwordReset-text"
+        }
+      }
     }
   }
 }

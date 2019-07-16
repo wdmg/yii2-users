@@ -70,14 +70,14 @@ class InitController extends Controller
                 echo $this->ansiFormat("Insert user #".($i+1)."... ", Console::FG_YELLOW);
 
                 $status = 10;
-                if($i >= 4)
+                if($i >= 1)
                     $status = 0;
 
                 Yii::$app->db->createCommand()->insert('{{%users}}', [
                     'id' => (100+$i),
                     'username' => $user,
                     'auth_key' => Yii::$app->security->generateRandomString(),
-                    'password_hash' => Yii::$app->security->generatePasswordHash($user.$user),
+                    'password_hash' => Yii::$app->security->generatePasswordHash($user),
                     'password_reset_token' => null,
                     'email' => $user . '@example.com',
                     'status' => $status,

@@ -24,14 +24,14 @@ And select the operation you want to perform:
 
 \* - The demo database contains 6 demo user`s with:
 
-| ID   | Username  | Password        | Email               | Status        |
-| ---- | --------- | --------------- | ------------------- | ------------- |
-| 100  | admin     | adminadmin      | admin@example.com   |               |
-| 101  | demo      | demodemo        | demo@example.com    |               |
-| 102  | alice     | alicealice      | alice@example.com   |               |
-| 103  | bob       | bobbob          | bob@example.com     |               |
-| 104  | johndoe   | johndoejohndoe  | johndoe@example.com | `diactivated` |
-| 105  | janedoe   | janedoejanedoe  | janedoe@example.com | `diactivated` |
+| ID   | Username  | Password   | Email               | Status      |
+| ---- | --------- | ---------- | ------------------- | ----------- |
+| 100  | admin     | admin      | admin@example.com   | `active`    |
+| 101  | demo      | demo       | demo@example.com    | `inactive`  |
+| 102  | alice     | alice      | alice@example.com   | `inactive`  |
+| 103  | bob       | bob        | bob@example.com     | `inactive`  |
+| 104  | johndoe   | johndoe    | johndoe@example.com | `inactive`  |
+| 105  | janedoe   | janedoe    | janedoe@example.com | `inactive`  |
 
 # Migrations
 In any case, you can execute the migration and create the initial data, run the following command in the console:
@@ -50,28 +50,26 @@ To add a module to the project, add the following data in your configuration fil
         ...
     ],
     'modules' => [
-        'tickets' => [
+        'users' => [
             'class' => 'wdmg\users\Module',
-            'routePrefix' => 'admin'
-            'options' => [
-                'rememberDuration' => (3600 * 24 * 30),
-                'signupConfirmation' => [
-                    'needConfirmation' => false,
-                    'checkTokenRoute' => 'site/signup-confirm',
-                    'supportEmail' => 'noreply@example.com',
-                    'emailViewPath' => [
-                        'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
-                        'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
-                    ],
+            'routePrefix' => 'admin',
+            'rememberDuration' => (3600 * 24 * 30),
+            'signupConfirmation' => [
+                'needConfirmation' => false,
+                'checkTokenRoute' => 'site/signup-confirm',
+                'supportEmail' => 'noreply@example.com',
+                'emailViewPath' => [
+                    'html' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-html',
+                    'text' => '@vendor/wdmg/yii2-users/mail/signupConfirmation-text',
                 ],
-                'passwordReset' => [
-                    'resetTokenExpire' => 3600,
-                    'checkTokenRoute' => 'site/reset-password',
-                    'supportEmail' => 'noreply@example.com',
-                    'emailViewPath' => [
-                        'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
-                        'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
-                    ],
+            ],
+            'passwordReset' => [
+                'resetTokenExpire' => 3600,
+                'checkTokenRoute' => 'site/reset-password',
+                'supportEmail' => 'noreply@example.com',
+                'emailViewPath' => [
+                    'html' => '@vendor/wdmg/yii2-users/mail/passwordReset-html',
+                    'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
                 ],
             ],
         ],
@@ -96,6 +94,6 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [in progress development]
+* v.1.1.6 - Added extra options to composer.json and navbar menu icon
 * v.1.1.5 - Added choice param for non interactive mode
 * v.1.1.4 - Module refactoring
-* v.1.1.3 - Module transferred to base module interface. Update Yii2 version.

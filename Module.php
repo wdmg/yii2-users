@@ -6,7 +6,7 @@ namespace wdmg\users;
  * Yii2 Users
  *
  * @category        Module
- * @version         1.1.5
+ * @version         1.1.6
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-users
  * @copyright       Copyright (c) 2019 W.D.M.Group, Ukraine
@@ -47,7 +47,7 @@ class Module extends BaseModule
     /**
      * @var string the module version
      */
-    private $version = "1.1.5";
+    private $version = "1.1.6";
 
     /**
      * @var integer, priority of initialization
@@ -87,6 +87,20 @@ class Module extends BaseModule
         // Set priority of current module
         $this->setPriority($this->priority);
 
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function dashboardNavItems($createLink = false)
+    {
+        $items = [
+            'label' => $this->name,
+            'url' => [$this->routePrefix . '/'. $this->id],
+            'icon' => 'fa-user',
+            'active' => in_array(\Yii::$app->controller->module->id, [$this->id])
+        ];
+        return $items;
     }
 
     /**

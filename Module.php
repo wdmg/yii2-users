@@ -52,7 +52,7 @@ class Module extends BaseModule
     /**
      * @var integer, priority of initialization
      */
-    private $priority = 5;
+    private $priority = 2;
 
     public $rememberDuration = (3600 * 24 * 30);
     public $signupConfirmation = [

@@ -21,13 +21,13 @@ class UsersSignup extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            [['username'], StopListValidator::className(), 'stoplist' => ['admin', 'editor', 'manager']],
+            [['username'], StopListValidator::class, 'stoplist' => ['admin', 'editor', 'manager']],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => Users::className(), 'message' => Yii::t('app/modules/users', 'This email address has already been taken.')],
+            ['email', 'unique', 'targetClass' => Users::class, 'message' => Yii::t('app/modules/users', 'This email address has already been taken.')],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];

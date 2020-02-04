@@ -3,10 +3,9 @@
 namespace wdmg\users\models;
 
 use Yii;
-use \yii\db\ActiveRecord;
-use \yii\web\IdentityInterface;
-use \yii\behaviors\TimeStampBehavior;
-use \yii\base\NotSupportedException;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
+use yii\base\NotSupportedException;
 
 
 /**
@@ -50,10 +49,10 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::class,
+                'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    self::EVENT_BEFORE_UPDATE => 'updated_at',
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
                 ],
                 'value' => function() {
                     return date("Y-m-d H:i:s");

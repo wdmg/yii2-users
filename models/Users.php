@@ -4,6 +4,7 @@ namespace wdmg\users\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 
@@ -320,6 +321,27 @@ class Users extends ActiveRecord implements IdentityInterface
             return $authManager->getPermissionsByUser($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getStatusesList($allStatuses = false)
+    {
+        $list = [
+            self::USR_STATUS_DELETED => Yii::t('app/modules/users','Deleted'),
+            self::USR_STATUS_WAITING => Yii::t('app/modules/users','Waiting'),
+            self::USR_STATUS_ACTIVE => Yii::t('app/modules/users','Active'),
+            self::USR_STATUS_BLOCKED => Yii::t('app/modules/users','Blocked'),
+        ];
+
+        if ($allStatuses)
+            $list = ArrayHelper::merge([
+                '*' => Yii::t('app/modules/users', 'All statuses')
+            ], $list);
+
+        return $list;
     }
 
 }

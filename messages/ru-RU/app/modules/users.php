@@ -18,6 +18,7 @@ return [
     'Updated at' => 'Обновлено',
     'Actions' => 'Действия',
 
+    'All statuses' => 'Все статусы',
     'Active' => 'Активный',
     'Deleted' => 'Не активный',
     'Waiting' => 'Ожидает подтверждения',
@@ -31,6 +32,7 @@ return [
     'Users search' => 'Поиск пользователей',
 
     'View user: {name}' => 'Просмотр пользователя: {name}',
+    'Create user' => 'Создание пользователя',
     'Update user: {name}' => 'Редактирование пользователя: {name}',
 
     'Update' => 'Обновить',

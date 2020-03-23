@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use wdmg\widgets\SelectInput;
 /* @var $this yii\web\View */
 /* @var $searchModel wdmg\users\models\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -38,6 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'format' => 'html',
+                'filter' => SelectInput::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status',
+                    'items' => $searchModel->getStatusesList(true),
+                    'options' => [
+                        'class' => 'form-control'
+                    ]
+                ]),
                 'headerOptions' => [
                     'class' => 'text-center'
                 ],
@@ -45,7 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'text-center'
                 ],
                 'value' => function($data) {
-
                     if ($data->status == $data::USR_STATUS_BLOCKED)
                         return '<span class="label label-danger">'.Yii::t('app/modules/users','Blocked').'</span>';
                     elseif ($data->status == $data::USR_STATUS_ACTIVE)
@@ -56,8 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return '<span class="label label-warning">'.Yii::t('app/modules/users','Waiting').'</span>';
                     else
                         return false;
-
-                },
+                }
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

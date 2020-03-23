@@ -16,9 +16,7 @@ $this->params['breadcrumbs'][] = Yii::t('app/modules/users', 'Update');
     <h1><?= Html::encode($this->title) ?> <small class="text-muted pull-right">[v.<?= $this->context->module->version ?>]</small></h1>
 </div>
 <div class="users-update">
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

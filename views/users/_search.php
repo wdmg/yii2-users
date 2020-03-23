@@ -1,5 +1,6 @@
 <?php
 
+use wdmg\widgets\SelectInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -39,11 +40,12 @@ use yii\widgets\ActiveForm;
 
                 <?= $form->field($model, 'email') ?>
 
-                <?= $form->field($model, 'status') ?>
-
-                <?php // echo $form->field($model, 'created_at') ?>
-
-                <?php // echo $form->field($model, 'updated_at') ?>
+                <?= $form->field($model, 'status')->widget(SelectInput::class, [
+                    'items' => $model->getStatusesList(true),
+                    'options' => [
+                        'class' => 'form-control'
+                    ]
+                ]); ?>
 
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('app/modules/users', 'Search'), ['class' => 'btn btn-primary']) ?>

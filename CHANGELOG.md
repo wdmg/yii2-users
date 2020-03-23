@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.1.*
+ * Added statuses list in view, translations
+ 
 ## 1.1.7 (2019-12-10)
  * Fixed deprecated class declaration
 

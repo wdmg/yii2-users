@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'items' => $searchModel->getStatusesList(true),
                     'options' => [
+                        'id' => 'statusFilter',
                         'class' => 'form-control'
                     ]
                 ]),

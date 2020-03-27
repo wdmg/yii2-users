@@ -1,7 +1,10 @@
 Changelog
 =========
 
-## 1.1.*
+## 1.1.8 (2020-03-27)
+ * Added pagination
+ * Up to date dependencies
+ * Fixed SlectInput in GridView
  * Added statuses list in view, translations
  
 ## 1.1.7 (2019-12-10)

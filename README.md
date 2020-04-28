@@ -1,6 +1,6 @@
-[![Progress](https://img.shields.io/badge/required-Yii2_v2.0.33-blue.svg)](https://packagist.org/packages/yiisoft/yii2)
-[![Github all releases](https://img.shields.io/github/downloads/wdmg/yii2-users/total.svg)](https://GitHub.com/wdmg/yii2-users/releases/)
-[![GitHub version](https://badge.fury.io/gh/wdmg%2Fyii2-users.svg)](https://github.com/wdmg/yii2-users)
+[![Yii2](https://img.shields.io/badge/required-Yii2_v2.0.33-blue.svg)](https://packagist.org/packages/yiisoft/yii2)
+[![Downloads](https://img.shields.io/packagist/dt/wdmg/yii2-users.svg)](https://packagist.org/packages/wdmg/yii2-users)
+[![Packagist Version](https://img.shields.io/packagist/v/wdmg/yii2-users.svg)](https://packagist.org/packages/wdmg/yii2-users)
 ![Progress](https://img.shields.io/badge/progress-in_development-red.svg)
 [![GitHub license](https://img.shields.io/github/license/wdmg/yii2-users.svg)](https://github.com/wdmg/yii2-users/blob/master/LICENSE)
 

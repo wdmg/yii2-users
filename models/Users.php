@@ -218,6 +218,22 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Return username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Return user e-mail
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getAuthKey()

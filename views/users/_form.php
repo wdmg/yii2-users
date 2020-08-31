@@ -15,11 +15,23 @@ use wdmg\widgets\SelectInput;
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+    <?php
+        if ($model->id == Yii::$app->user->id || Yii::$app->user->can('admin')) {
+            echo $form->field($model, 'password')->textInput(['maxlength' => true]);
+            echo $form->field($model, 'password_confirm')->textInput(['maxlength' => true]);
+        }
+
+    ?>
+
+    <?php
+        if (Yii::$app->user->can('admin')) {
+            echo $form->field($model, 'auth_key')->textInput(['readonly' => true]);
+            echo $form->field($model, 'password_hash')->textInput(['readonly' => true]);
+        }
+
+    ?>
 
     <?= $form->field($model, 'status')->widget(SelectInput::class, [
         'items' => $model->getStatusesList(false),

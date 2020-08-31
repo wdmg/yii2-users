@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 1.1.*
+ * CRUD for add/update user info
+ * Added getUsername() and getEmail() methods
+ 
 ## 1.1.8 (2020-03-27)
  * Added pagination
  * Up to date dependencies

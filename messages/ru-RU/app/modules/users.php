@@ -13,11 +13,13 @@ return [
     'Password hash' => 'Хеш пароля',
     'Password reset token' => 'Токен восстановления',
     'Email' => 'Эл. почта',
-    'Status' => 'Статус',
+    'Password' => 'Пароль',
+    'Password confirm' => 'Подтверждение пароля',
     'Created at' => 'Создано',
     'Updated at' => 'Обновлено',
     'Actions' => 'Действия',
 
+    'Status' => 'Cтатус',
     'All statuses' => 'Все статусы',
     'Active' => 'Активный',
     'Deleted' => 'Не активный',
@@ -72,6 +74,17 @@ return [
     'Error updating user data.' => 'Ошибка обновления пользовательских данных.',
     'User authentication error.' => 'Ошибка аутентификации пользователя.',
     'User registration failed!' => 'Регистрация пользователя не удалась!',
+
+    'The password must contains min 1 char in uppercase.' => 'Пароль должен содержать минимум 1 символ в верхнем регистре.',
+    'The password must contains min 1 char as number.' => 'Пароль должен содержать минимум 1 символ в качестве числа.',
+    'The password must contains min 1 char in lowercase.' => 'Пароль должен содержать минимум 1 символ в нижнем регистре.',
+    'The password must contents min 1 special char.' => 'Пароль должен содержать минимум 1 специальный символ.',
+    'Password and password confirmation must match.' => 'Пароль и подтверждение пароля должны совпадать.',
+
+    'User has been successfully updated!' => 'Пользователь успешно обновлен!',
+    'New user has been successfully added!' => 'Новый пользователь успешно добавлен!',
+    'An error occurred while updating the user.' => 'Произошла ошибка при обновлении пользователя.',
+    'An error occurred while add the new user.' => 'Произошла ошибка при добавлении нового пользователя.',
 
     'Registration is not complete. Confirm the email address of the link from the letter.' => 'Регистрация не завершена. Подтвердите адрес эл.почты по ссылке из письма.',
     'The user has been blocked by the administrator.' => 'Пользователь был заблокирован администратором.',

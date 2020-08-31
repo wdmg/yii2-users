@@ -93,7 +93,41 @@ class UsersController extends Controller
     {
         $model = new Users();
 
+        if (Yii::$app->user->can('admin'))
+            $model->scenario = Users::USR_UPDATE_OR_CREATE_PASSWD;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            if ($model->save()) {
+
+                // Log activity
+                $this->module->logActivity(
+                    'User `' . $model->username . '` with ID `' . $model->id . '` has been successfully added.',
+                    $this->uniqueId . ":" . $this->action->id,
+                    'success',
+                    1
+                );
+
+                Yii::$app->getSession()->setFlash(
+                    'success',
+                    Yii::t('app/modules/users', 'New user has been successfully added!')
+                );
+            } else {
+
+                // Log activity
+                $this->module->logActivity(
+                    'An error occurred while add the user: ' . $model->username,
+                    $this->uniqueId . ":" . $this->action->id,
+                    'danger',
+                    1
+                );
+
+                Yii::$app->getSession()->setFlash(
+                    'danger',
+                    Yii::t('app/modules/users', 'An error occurred while add the new user.')
+                );
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -113,7 +147,40 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->id == Yii::$app->user->id || Yii::$app->user->can('admin'))
+            $model->scenario = Users::USR_UPDATE_OR_CREATE_PASSWD;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->save()) {
+
+                // Log activity
+                $this->module->logActivity(
+                    'User `' . $model->username . '` with ID `' . $model->id . '` has been successfully updated.',
+                    $this->uniqueId . ":" . $this->action->id,
+                    'success',
+                    1
+                );
+
+                Yii::$app->getSession()->setFlash(
+                    'success',
+                    Yii::t('app/modules/users', 'User has been successfully updated!')
+                );
+            } else {
+
+                // Log activity
+                $this->module->logActivity(
+                    'An error occurred while updating the user: ' . $model->username,
+                    $this->uniqueId . ":" . $this->action->id,
+                    'danger',
+                    1
+                );
+
+                Yii::$app->getSession()->setFlash(
+                    'danger',
+                    Yii::t('app/modules/users', 'An error occurred while updating the user.')
+                );
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

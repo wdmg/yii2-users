@@ -35,6 +35,11 @@ class Users extends ActiveRecord implements IdentityInterface
     const USR_STATUS_ACTIVE = 10;
     const USR_STATUS_BLOCKED = 15;
 
+    const USR_UPDATE_OR_CREATE_PASSWD = 'manage_user_password';
+
+    public $password;
+    public $password_confirm;
+
     /**
      * {@inheritdoc}
      */
@@ -79,6 +84,13 @@ class Users extends ActiveRecord implements IdentityInterface
             [['status'], 'default', 'value' => self::USR_STATUS_ACTIVE],
             [['status'], 'in', 'range' => [self::USR_STATUS_DELETED, self::USR_STATUS_WAITING, self::USR_STATUS_ACTIVE, self::USR_STATUS_BLOCKED]],
 
+            [['password', 'password_confirm'], 'string', 'min' => 8, 'max' => 24, 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+            [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in uppercase.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+            [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char as number.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+            [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[a-z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in lowercase.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+            [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[\W]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contents min 1 special char.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+            [['password_confirm'], 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('app/modules/users', 'Password and password confirmation must match.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+
         ];
     }
 
@@ -118,6 +130,26 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function beforeSave($insert)
+    {
+        if (
+            $this->scenario == self::USR_UPDATE_OR_CREATE_PASSWD &&
+            (
+                $this->id == Yii::$app->user->id ||
+                Yii::$app->user->can('admin')
+            ) &&
+            isset($this->password)
+        ) {
+            $this->setPassword($this->password);
+            $this->generateAuthKey();
+            $this->removePasswordResetToken();
+        }
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -127,6 +159,8 @@ class Users extends ActiveRecord implements IdentityInterface
             'password_hash' => Yii::t('app/modules/users', 'Password hash'),
             'password_reset_token' => Yii::t('app/modules/users', 'Password reset token'),
             'email' => Yii::t('app/modules/users', 'Email'),
+            'password' => Yii::t('app/modules/users', 'Password'),
+            'password_confirm' => Yii::t('app/modules/users', 'Password confirm'),
             'status' => Yii::t('app/modules/users', 'Status'),
             'created_at' => Yii::t('app/modules/users', 'Created at'),
             'updated_at' => Yii::t('app/modules/users', 'Updated at'),

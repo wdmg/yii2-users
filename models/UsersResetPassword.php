@@ -55,11 +55,11 @@ class UsersResetPassword extends Model
     {
         return [
             ['password', 'required'],
-            ['password', 'string', 'min' => 8],
-            ['password', 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => 'The password may contens min 1 char in uppercase.'],
-            ['password', 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => 'The password may contens min 1 char has number.'],
-            ['password', 'match', 'pattern' => '/(.*[a-z]){1,}.*/', 'message' => 'The password may contens min 1 char in lowercase.'],
-            ['password', 'match', 'pattern' => '/(.*[\W]){1,}.*/', 'message' => 'The password may contens min 1 special char.'],
+            ['password', 'string', 'min' => 8, 'max' => 24],
+            ['password', 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in uppercase.')],
+            ['password', 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char as number.')],
+            ['password', 'match', 'pattern' => '/(.*[a-z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in lowercase.')],
+            ['password', 'match', 'pattern' => '/(.*[\W]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contents min 1 special char.')],
         ];
     }
 

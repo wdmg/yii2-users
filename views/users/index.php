@@ -24,8 +24,45 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'username',
+            [
+                'attribute' => 'username',
+                'format' => 'html',
+                'value' => function($data) {
+
+                    if ($data->is_online)
+                        $badge = '<span class="fa fa-circle text-success" data-rel="tooltip" title="' . Yii::t('app/modules/users', 'User is online') . '"></span>';
+                    else
+                        $badge = '<span class="fa fa-circle text-muted" data-rel="tooltip" title="' . Yii::t('app/modules/users', 'Last seen {last_seen}', [
+                            'last_seen' => Yii::$app->formatter->asDatetime($data->lastseen_at)
+                        ]) . '"></span>';
+
+                    return $data->username .'&nbsp;'. $badge;
+                }
+            ],
             'email:email',
+            (Yii::$app->getAuthManager()) ? [
+                'attribute' => 'role',
+                'format' => 'html',
+                'filter' => SelectInput::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'role',
+                    'items' => $searchModel->getRolesList(true),
+                    'options' => [
+                        'id' => 'roleFilter',
+                        'class' => 'form-control'
+                    ]
+                ]),
+                'headerOptions' => [
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ],
+                'value' => function($data) {
+                    $role = $data->getDefaultRole(true);
+                    return Html::a($role->name, ['../rbac/roles/view', 'id' => $role->name]);
+                }
+            ] : ['visible' => false],
             [
                 'attribute' => 'created_at',
                 'format' => 'datetime',

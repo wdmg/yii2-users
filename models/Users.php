@@ -37,6 +37,8 @@ class Users extends ActiveRecord implements IdentityInterface
 
     const USR_UPDATE_OR_CREATE_PASSWD = 'manage_user_password';
 
+    public $is_online;
+    public $role;
     public $password;
     public $password_confirm;
 
@@ -74,7 +76,7 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'lastseen_at'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
@@ -84,6 +86,7 @@ class Users extends ActiveRecord implements IdentityInterface
             [['status'], 'default', 'value' => self::USR_STATUS_ACTIVE],
             [['status'], 'in', 'range' => [self::USR_STATUS_DELETED, self::USR_STATUS_WAITING, self::USR_STATUS_ACTIVE, self::USR_STATUS_BLOCKED]],
 
+            [['role'], 'in', 'range' => $this->getAllRoles(false), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'string', 'min' => 8, 'max' => 24, 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in uppercase.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char as number.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
@@ -109,6 +112,28 @@ class Users extends ActiveRecord implements IdentityInterface
                 $authManager->assign($role, $this->getId());
             }
         }*/
+
+        if (
+            $this->scenario == self::USR_UPDATE_OR_CREATE_PASSWD &&
+            (($authManager = Yii::$app->getAuthManager()) && Yii::$app->user->can('admin')) &&
+            isset($this->role)
+        ) {
+            $authManager->revokeAll($this->id);
+            $role = $authManager->getRole(trim($this->role));
+            $authManager->assign($role, $this->id);
+        }
+
+    }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+        $this->role = $this->getDefaultRole(false);
+
+        if (strtotime('-5 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($this->lastseen_at))
+            $this->is_online = true;
+        else
+            $this->is_online = false;
 
     }
 
@@ -159,6 +184,8 @@ class Users extends ActiveRecord implements IdentityInterface
             'password_hash' => Yii::t('app/modules/users', 'Password hash'),
             'password_reset_token' => Yii::t('app/modules/users', 'Password reset token'),
             'email' => Yii::t('app/modules/users', 'Email'),
+            'role' => Yii::t('app/modules/users', 'Role'),
+            'is_online' => Yii::t('app/modules/users', 'Is online?'),
             'password' => Yii::t('app/modules/users', 'Password'),
             'password_confirm' => Yii::t('app/modules/users', 'Password confirm'),
             'status' => Yii::t('app/modules/users', 'Status'),
@@ -337,42 +364,54 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @param bool $instance
+     * @return array|\yii\rbac\Role[]|null
      */
-    public function getRoles()
+    public function getRoles($instance = true)
     {
         $authManager = Yii::$app->getAuthManager();
-
-        if($authManager)
-            return $authManager->getRolesByUser($this->id); //@TODO: must returned ActiveQuery
+        if ($authManager)
+            return ($instance) ? $authManager->getRolesByUser($this->id) : array_keys($authManager->getRolesByUser($this->id));
         else
             return null;
     }
+
+    /**
+     * @param bool $instance
+     * @return int|mixed|string|null
+     */
+    public function getDefaultRole($instance = true)
+    {
+        $roles = $this->getRoles();
+        if ($roles)
+            return ($instance) ? end($roles) : array_key_last($roles);
+        else
+            return null;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getAssignments()
     {
         $authManager = Yii::$app->getAuthManager();
-
-        if($authManager)
+        if ($authManager)
             return $authManager->getAssignments($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPermissions()
     {
         $authManager = Yii::$app->getAuthManager();
-
-        if($authManager)
+        if ($authManager)
             return $authManager->getPermissionsByUser($this->id); //@TODO: must returned ActiveQuery
         else
             return null;
     }
-
 
     /**
      * @return array
@@ -389,6 +428,34 @@ class Users extends ActiveRecord implements IdentityInterface
         if ($allStatuses)
             $list = ArrayHelper::merge([
                 '*' => Yii::t('app/modules/users', 'All statuses')
+            ], $list);
+
+        return $list;
+    }
+
+    public function getAllRoles($instance = true)
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if ($authManager){
+            return ($instance) ? $authManager->roles : array_keys($authManager->roles);
+        } else
+            return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesList($allRoles = false)
+    {
+
+        $list = [];
+        if ($roles = $this->getAllRoles(false)) {
+            $list = array_reverse(array_combine($roles, $roles));
+        }
+
+        if ($allRoles)
+            $list = ArrayHelper::merge([
+                '*' => Yii::t('app/modules/users', 'All roles')
             ], $list);
 
         return $list;

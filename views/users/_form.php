@@ -22,15 +22,24 @@ use wdmg\widgets\SelectInput;
             echo $form->field($model, 'password')->textInput(['maxlength' => true]);
             echo $form->field($model, 'password_confirm')->textInput(['maxlength' => true]);
         }
-
     ?>
 
     <?php
-        if (Yii::$app->user->can('admin')) {
+        if ($model->id && Yii::$app->user->can('admin')) {
             echo $form->field($model, 'auth_key')->textInput(['readonly' => true]);
             echo $form->field($model, 'password_hash')->textInput(['readonly' => true]);
         }
+    ?>
 
+    <?php
+        if (Yii::$app->getAuthManager() && Yii::$app->user->can('admin')) {
+            echo $form->field($model, 'role')->widget(SelectInput::class, [
+                'items' => $model->getRolesList(false),
+                'options' => [
+                    'class' => 'form-control'
+                ]
+            ]);
+        }
     ?>
 
     <?= $form->field($model, 'status')->widget(SelectInput::class, [

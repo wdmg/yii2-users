@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                 }
             ],
             'email:email',
-            [
+            (Yii::$app->getAuthManager()) ? [
                 'attribute' => 'roles',
                 'format' => 'html',
                 'value' => function($data) {
@@ -75,8 +75,8 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                     }
                     return $output . "</ul>";
                 },
-            ],
-            [
+            ] : ['visible' => false],
+            (Yii::$app->getAuthManager()) ? [
                 'attribute' => 'permissions',
                 'format' => 'html',
                 'value' => function($data) {
@@ -86,8 +86,8 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                     }
                     return $output . "</ul>";
                 },
-            ],
-            [
+            ] : ['visible' => false],
+            (Yii::$app->getAuthManager()) ? [
                 'attribute' => 'assignments',
                 'format' => 'html',
                 'value' => function($data) {
@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                     }
                     return $output . "</ul>";
                 },
-            ],
+            ] : ['visible' => false],
             [
                 'attribute' => 'status',
                 'format' => 'html',
@@ -115,6 +115,18 @@ $this->params['breadcrumbs'][] = ucfirst($this->title);
                         return false;
 
                 },
+            ],
+            [
+                'attribute' => 'lastseen_at',
+                'label' => Yii::t('app/modules/users', 'Is online?'),
+                'value' => function($data) {
+                    if ($data->is_online)
+                        return Yii::t('app/modules/users', 'User is online');
+                    else
+                        return Yii::t('app/modules/users', 'Last seen {last_seen}', [
+                            'last_seen' => Yii::$app->formatter->asDatetime($data->lastseen_at)
+                        ]);
+                }
             ],
             [
                 'attribute' => 'created_at',

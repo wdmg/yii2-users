@@ -2,6 +2,7 @@
 
 namespace wdmg\users\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use wdmg\users\models\Users;
@@ -11,14 +12,16 @@ use wdmg\users\models\Users;
  */
 class UsersSearch extends Users
 {
+
+    public $role;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'status', 'role', 'username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -69,6 +72,12 @@ class UsersSearch extends Users
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'email', $this->email]);
+
+        if ($this->role) {
+            if ($ids = Yii::$app->getAuthManager()->getUserIdsByRole(trim($this->role))) {
+                $query->where(['id' => $ids]);
+            }
+        }
 
         return $dataProvider;
     }

@@ -19,6 +19,9 @@ return [
     'Updated at' => 'Обновлено',
     'Actions' => 'Действия',
 
+    'All roles' => 'Все роли',
+    'Role' => 'Роль',
+
     'Status' => 'Cтатус',
     'All statuses' => 'Все статусы',
     'Active' => 'Активный',
@@ -36,6 +39,10 @@ return [
     'View user: {name}' => 'Просмотр пользователя: {name}',
     'Create user' => 'Создание пользователя',
     'Update user: {name}' => 'Редактирование пользователя: {name}',
+
+    'Is online?' => 'Онлайн?',
+    'User is online' => 'Пользователь онлайн',
+    'Last seen {last_seen}' => 'Последний раз был {last_seen}',
 
     'Update' => 'Обновить',
     'Edit' => 'Редактировать',

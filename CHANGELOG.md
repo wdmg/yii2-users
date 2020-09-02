@@ -1,7 +1,9 @@
 Changelog
 =========
 
-## 1.1.*
+## 1.2.0 (2020-09-02)
+ * User is online feature
+ * Filter users by role, assign/revoke user role
  * CRUD for add/update user info
  * Added getUsername() and getEmail() methods
  

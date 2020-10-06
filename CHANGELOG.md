@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.2.1 (2020-10-07)
+ * Bugfix when save user password
+ 
 ## 1.2.0 (2020-09-02)
  * User is online feature
  * Filter users by role, assign/revoke user role

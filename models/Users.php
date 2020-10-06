@@ -163,12 +163,13 @@ class Users extends ActiveRecord implements IdentityInterface
                 $this->id == Yii::$app->user->id ||
                 Yii::$app->user->can('admin')
             ) &&
-            isset($this->password)
+            (!empty($this->password) && !empty($this->password_confirm))
         ) {
             $this->setPassword($this->password);
             $this->generateAuthKey();
             $this->removePasswordResetToken();
         }
+
         return parent::beforeSave($insert);
     }
 

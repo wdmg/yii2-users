@@ -129,8 +129,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'nextPageLabel'  => Yii::t('app/modules/users', 'Next page &rarr;')
         ],
     ]); ?>
+    <hr/>
     <div>
-        <?= Html::a(Yii::t('app/modules/users', 'Add new user'), ['create'], ['class' => 'btn btn-success pull-right']) ?>
+        <?= Html::a(Yii::t('app/modules/users', 'Add new user'), ['create'], ['class' => 'btn btn-add btn-success pull-right']) ?>
     </div>
 <?php Pjax::end(); ?>
 </div>

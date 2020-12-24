@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.2.2 (2020-12-24)
+ * Bugfix when RestAPI request
+ 
 ## 1.2.1 (2020-10-07)
  * Bugfix when save user password
  

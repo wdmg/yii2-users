@@ -104,6 +104,7 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [ready to use]
+* v.1.2.2 - Bugfix when RestAPI request
 * v.1.2.1 - Bugfix when save user password
 * v.1.2.0 - Users online, filter by role, assign/revoke user role, add/update user info
 * v.1.1.8 - Added pagination, up to date dependencies

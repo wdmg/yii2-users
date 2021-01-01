@@ -4,9 +4,9 @@ namespace wdmg\users\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
+use wdmg\helpers\ArrayHelper;
 
 
 /**
@@ -385,7 +385,7 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         $roles = $this->getRoles();
         if ($roles)
-            return ($instance) ? end($roles) : array_key_last($roles);
+            return ($instance) ? end($roles) : ArrayHelper::keyLast($roles);
         else
             return null;
     }

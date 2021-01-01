@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.2.3 (2021-01-01)
+ * Unsupported array function fixed
+ 
 ## 1.2.2 (2020-12-24)
  * Bugfix when RestAPI request
  

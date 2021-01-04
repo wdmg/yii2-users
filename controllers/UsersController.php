@@ -41,7 +41,7 @@ class UsersController extends Controller
         ];
 
         // If auth manager not configured use default access control
-        if(!Yii::$app->authManager) {
+        if (!Yii::$app->authManager) {
             $behaviors['access'] = [
                 'class' => AccessControl::class,
                 'rules' => [

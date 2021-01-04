@@ -12,7 +12,9 @@ class UsersPasswordRequest extends Model
     /**
      * @var string, user email adress
      */
+    public $id;
     public $email;
+    public $username;
 
     /**
      * {@inheritdoc}
@@ -66,9 +68,13 @@ class UsersPasswordRequest extends Model
 
         if (!Users::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
-
-            if (!$user->save())
+            if (!$user->save()) {
                 return false;
+            } else {
+                $this->id = $user->id;
+                $this->email = $user->email;
+                $this->username = $user->username;
+            }
 
         }
 

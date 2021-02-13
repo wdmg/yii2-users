@@ -5,7 +5,7 @@ namespace wdmg\users\models;
 use Yii;
 use yii\base\Model;
 use wdmg\users\models\Users;
-use wdmg\validators\StopListValidator;
+use wdmg\validators\ReservedValidator;
 
 class UsersSignup extends Model
 {
@@ -21,7 +21,7 @@ class UsersSignup extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            [['username'], StopListValidator::class, 'stoplist' => ['admin', 'editor', 'manager']],
+            [['username'], ReservedValidator::class, 'stoplist' => ['admin', 'editor', 'manager']],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],

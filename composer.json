@@ -53,7 +53,9 @@
           "html": "@vendor/wdmg/yii2-users/mail/passwordReset-html",
           "text": "@vendor/wdmg/yii2-users/mail/passwordReset-text"
         }
-      }
+      },
+      "multiSignIn": true,
+      "sessionTimeout": 0
     }
   }
 }

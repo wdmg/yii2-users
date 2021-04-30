@@ -66,6 +66,13 @@ return [
     'Sorry, but your account has been deleted.' => 'Извините, но ваш аккаунт был удален.',
     'Unknown authorization error.' => 'Неизвестная ошибка авторизации.',
 
+    'It looks like you are already logged in! Multi-authorization is disabled.' => 'Похоже, что Вы уже авторизованы! Мультиавторизация отключена.',
+    'Your session was terminated automatically due to re-authorization.' => 'Ваша сессия была завершена автоматически в связи с повторной авторизацией.',
+
+    'Session was terminated automatically due to inactivity for more than {timeout, plural, =0{} =1{# second} one{# second} few{# seconds} many{# seconds} other{# seconds}}.' => 'Сессия была завершена автоматически в связи с неактивностью более {timeout, plural, =0{} =1{# секунды} one{# секунд} few{# секунды} many{# секунд} other{# секунд}}.',
+    'Session was terminated automatically due to inactivity for more than {timeout, plural, =0{} =1{# minute} one{# minute} few{# minutes} many{# minutes} other{# minutes}}.' => 'Сессия была завершена автоматически в связи с неактивностью более {timeout, plural, =0{} =1{# минуты} one{# минута} few{# минуты} many{# минут} other{# минут}}.',
+    'Session was terminated automatically due to inactivity for more than {timeout, plural, =0{} =1{# hour} one{# hour} few{# hours} many{# hours} other{# hours}}.' => 'Сессия была завершена автоматически в связи с неактивностью более {timeout, plural, =0{} =1{# часа} one{# час} few{# часа} many{# часов} other{# часов}}.',
+
     'Password reset token cannot be blank.' => 'Токен сброса пароля не может быть пустым.',
     'Wrong password reset token.' => 'Неверный токен сброса пароля.',
     'There is no user with this email address.' => 'Пользователь с этим адресом электронной почты не найден.',

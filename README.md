@@ -82,6 +82,8 @@ To add a module to the project, add the following data in your configuration fil
                     'text' => '@vendor/wdmg/yii2-users/mail/passwordReset-text',
                 ],
             ],
+            'multiSignIn' => true,
+            'sessionTimeout' => 0, // where `0` is unlimited
         ],
         ...
     ],
@@ -104,11 +106,8 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [ready to use]
+* v.1.2.4 - Multiple Sign In`s and logoffs by session timeout
 * v.1.2.3 - Unsupported array function fixed
 * v.1.2.2 - Bugfix when RestAPI request
 * v.1.2.1 - Bugfix when save user password
 * v.1.2.0 - Users online, filter by role, assign/revoke user role, add/update user info
-* v.1.1.8 - Added pagination, up to date dependencies
-* v.1.1.7 - Fixed deprecated class declaration
-* v.1.1.6 - Added extra options to composer.json and navbar menu icon
-* v.1.1.5 - Added choice param for non interactive mode

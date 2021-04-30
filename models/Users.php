@@ -104,15 +104,6 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
 
-        // Attach default role to new user
-        /*$authManager = Yii::$app->getAuthManager();
-        if($authManager) {
-            foreach ($authManager->defaultRoles as $role) {
-                $role = $authManager->getRole($role);
-                $authManager->assign($role, $this->getId());
-            }
-        }*/
-
         if (
             $this->scenario == self::USR_UPDATE_OR_CREATE_PASSWD &&
             (($authManager = Yii::$app->getAuthManager()) && Yii::$app->user->can('admin')) &&
@@ -130,7 +121,7 @@ class Users extends ActiveRecord implements IdentityInterface
         parent::afterFind();
         $this->role = $this->getDefaultRole(false);
 
-        if (strtotime('-5 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($this->lastseen_at))
+        if (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($this->lastseen_at))
             $this->is_online = true;
         else
             $this->is_online = false;
@@ -143,13 +134,6 @@ class Users extends ActiveRecord implements IdentityInterface
     public function afterDelete()
     {
         parent::afterDelete();
-
-        // Deattach all user roles
-        /*$authManager = Yii::$app->getAuthManager();
-        if($authManager) {
-            $authManager->revokeAll($this->getId());
-        }*/
-
     }
 
     /**

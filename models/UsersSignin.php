@@ -63,15 +63,18 @@ class UsersSignin extends Model
                 $module = Yii::$app->getModule('users');
 
             // Get time to remember user
-            if($module->rememberDuration)
+            if ($module->rememberDuration)
                 $duration = intval($module->rememberDuration);
             else
                 $duration = (3600 * 24 * 30);
 
             $user = $this->getUser();
+            if ($user->status === Users::USR_STATUS_ACTIVE) {
+                if ($user->is_online && $module->multiSignIn)
+                    throw new \DomainException(Yii::t('app/modules/users', 'It looks like you are already logged in! Multi-authorization is disabled.'));
 
-            if ($user->status === Users::USR_STATUS_ACTIVE)
                 return Yii::$app->user->login($user, $this->rememberMe ? $duration : 0);
+            }
 
             if ($user->status === Users::USR_STATUS_WAITING)
                 throw new \DomainException(Yii::t('app/modules/users', 'Registration is not complete. Confirm the email address of the link from the letter.'));

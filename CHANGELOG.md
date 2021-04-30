@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.2.4 (2021-04-30)
+ * Multiple Sign In`s and logoffs by session timeout
+ 
 ## 1.2.3 (2021-01-01)
  * Unsupported array function fixed
  

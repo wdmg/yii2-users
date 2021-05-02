@@ -40,6 +40,8 @@ class UsersSignin extends Model
                 $this->addError($attribute, Yii::t('app/modules/users', 'Unknown authorization error.'));
             } else if (!$user->validatePassword($this->password)) {
                 $this->addError($attribute, Yii::t('app/modules/users', 'Incorrect username or password.'));
+            } else if ($user && $user->validatePassword($this->password) && $user->status == Users::USR_STATUS_BLOCKED) {
+                $this->addError($attribute, Yii::t('app/modules/users', 'Sorry, but your account has been blocked.'));
             } else if ($user && $user->validatePassword($this->password) && $user->status == Users::USR_STATUS_DELETED) {
                 $this->addError($attribute, Yii::t('app/modules/users', 'Sorry, but your account has been deleted.'));
             }
@@ -70,8 +72,8 @@ class UsersSignin extends Model
 
             $user = $this->getUser();
             if ($user->status === Users::USR_STATUS_ACTIVE) {
-                if ($user->is_online && $module->multiSignIn)
-                    throw new \DomainException(Yii::t('app/modules/users', 'It looks like you are already logged in! Multi-authorization is disabled.'));
+                if ($module->multiSignIn && (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($user->lastseen_at)))
+                    throw new \DomainException(Yii::t('app/modules/users', 'It looks like you are already logged in! Sign out of your account in another browser/device and try to auth in a minute.'));
 
                 return Yii::$app->user->login($user, $this->rememberMe ? $duration : 0);
             }

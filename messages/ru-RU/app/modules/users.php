@@ -63,10 +63,13 @@ return [
     'Incorrect username or password.' => 'Некорректное имя пользователя или пароль.',
     'This username has already been taken.' => 'Данное имя пользователя уже кем-то используется.',
     'This email address has already been taken.' => 'Данный адрес эл. почты уже кем-то используется.',
-    'Sorry, but your account has been deleted.' => 'Извините, но ваш аккаунт был удален.',
+    'Sorry, but your account has been blocked.' => 'Извините, но Ваш аккаунт был заблокирован.',
+    'Sorry, but your account has been deleted.' => 'Извините, но Ваш аккаунт был удален.',
     'Unknown authorization error.' => 'Неизвестная ошибка авторизации.',
 
-    'It looks like you are already logged in! Multi-authorization is disabled.' => 'Похоже, что Вы уже авторизованы! Мультиавторизация отключена.',
+    'New users for the last 24 hours' => 'Новых пользователей за последние сутки',
+
+    'It looks like you are already logged in! Sign out of your account in another browser/device and try to auth in a minute.' => 'Похоже, вы уже вошли в систему! Выйдите из своей учетной записи в другом браузере / на другом устройстве и попробуйте авторизоваться через минуту.',
     'Your session was terminated automatically due to re-authorization.' => 'Ваша сессия была завершена автоматически в связи с повторной авторизацией.',
 
     'Session was terminated automatically due to inactivity for more than {timeout, plural, =0{} =1{# second} one{# second} few{# seconds} many{# seconds} other{# seconds}}.' => 'Сессия была завершена автоматически в связи с неактивностью более {timeout, plural, =0{} =1{# секунды} one{# секунд} few{# секунды} many{# секунд} other{# секунд}}.',

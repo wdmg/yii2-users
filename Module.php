@@ -131,16 +131,13 @@ class Module extends BaseModule
             \yii\base\Event::on(\yii\web\Controller::class, \yii\web\Controller::EVENT_BEFORE_ACTION, function ($event) use ($app, $module) {
                 if (!$module->isRestAPI()) {
                     $lastseen_at = $app->user->identity->lastseen_at;
-
                     if (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) > strtotime($lastseen_at)) {
-                        $app->user->identity::updateAll(['lastseen_at' => date('Y-m-d H:i:s')], ['id' => $app->user->id]);
-                    }
-
-                    if (intval($module->sessionTimeout) > 0 && !$app->user->isGuest) {
+                        $app->user->identityClass::updateAll(['lastseen_at' => date('Y-m-d H:i:s')], ['id' => $app->user->id]);
+                    } else if (intval($module->sessionTimeout) > 0) {
                         $time_delta = intval(strtotime(date('Y-m-d H:i:s')) - strtotime($lastseen_at)) - intval($module->sessionTimeout);
 
                         if ($time_delta >= intval($module->sessionTimeout)) {
-                            
+
                             $timeout = intval($module->sessionTimeout);
                             $hours = floor($timeout / 3600);
                             $minutes = floor(($timeout / 60) % 60);

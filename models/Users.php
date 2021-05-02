@@ -2,6 +2,7 @@
 
 namespace wdmg\users\models;
 
+use wdmg\helpers\StringHelper;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -121,11 +122,12 @@ class Users extends ActiveRecord implements IdentityInterface
         parent::afterFind();
         $this->role = $this->getDefaultRole(false);
 
-        if (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($this->lastseen_at))
-            $this->is_online = true;
-        else
-            $this->is_online = false;
-
+        // Check only for current authorized user
+        if (Yii::$app->getUser()) {
+            if ($this->id == Yii::$app->getUser()->getId()) {
+                $this->is_online = $this->getIsOnline();
+            }
+        }
     }
 
     /**
@@ -446,4 +448,38 @@ class Users extends ActiveRecord implements IdentityInterface
         return $list;
     }
 
+
+    /** Check and return user is online?
+     *
+     * @return bool
+     */
+    public function getIsOnline()
+    {
+        if (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) <= strtotime($this->lastseen_at))
+            $this->is_online = true;
+        else
+            $this->is_online = false;
+
+        return $this->is_online;
+    }
+
+    /**
+     * Return stats count by all users
+     *
+     * @return array|null
+     */
+    public static function getStatsCount($onlyActive = true, $asArray = false) {
+        $counts = static::find()
+            ->select([new \yii\db\Expression('SUM( CASE WHEN `created_at` >= TIMESTAMP(CURRENT_TIMESTAMP() - INTERVAL 1 DAY) THEN 1 END ) AS count')])
+            ->addSelect([new \yii\db\Expression('SUM( CASE WHEN `lastseen_at` >= TIMESTAMP(CURRENT_TIMESTAMP() - INTERVAL 1 MINUTE) THEN 1 END ) AS online')])
+            ->addSelect([new \yii\db\Expression('SUM( CASE WHEN `id` > 0 THEN 1 END ) AS total')]);
+
+        if ($onlyActive)
+            $counts->where(['status' => static::USR_STATUS_ACTIVE]);
+
+        if ($asArray)
+            return $counts->asArray()->one();
+
+        return $counts->one();
+    }
 }

@@ -1,7 +1,8 @@
 Changelog
 =========
 
-## 1.2.4 (2021-04-30)
+## 1.2.4 (2021-05-02)
+ * Fixed: check multiple sign in, added counter stats method
  * Multiple Sign In`s and logoffs by session timeout
  
 ## 1.2.3 (2021-01-01)

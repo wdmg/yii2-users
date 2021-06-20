@@ -6,7 +6,7 @@ namespace wdmg\users;
  * Yii2 Users
  *
  * @category        Module
- * @version         1.2.4
+ * @version         1.2.5
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-users
  * @copyright       Copyright (c) 2019 - 2021 W.D.M.Group, Ukraine
@@ -47,7 +47,7 @@ class Module extends BaseModule
     /**
      * @var string the module version
      */
-    private $version = "1.2.4";
+    private $version = "1.2.5";
 
     /**
      * @var integer, priority of initialization
@@ -132,7 +132,7 @@ class Module extends BaseModule
                 if (!$module->isRestAPI()) {
                     $lastseen_at = $app->user->identity->lastseen_at;
                     if (strtotime('-1 minutes', strtotime(date('Y-m-d H:i:s'))) > strtotime($lastseen_at)) {
-                        $app->user->identityClass::updateAll(['lastseen_at' => date('Y-m-d H:i:s')], ['id' => $app->user->id]);
+                        $app->user->identity->updateAll(['lastseen_at' => date('Y-m-d H:i:s')], ['id' => $app->user->id]);
                     } else if (intval($module->sessionTimeout) > 0) {
                         $time_delta = intval(strtotime(date('Y-m-d H:i:s')) - strtotime($lastseen_at)) - intval($module->sessionTimeout);
 

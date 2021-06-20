@@ -106,6 +106,7 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [ready to use]
+* v.1.2.5 - Fixed: syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM)
 * v.1.2.4 - Multiple Sign In`s and logoffs by session timeout
 * v.1.2.3 - Unsupported array function fixed
 * v.1.2.2 - Bugfix when RestAPI request

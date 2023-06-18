@@ -6,7 +6,7 @@ namespace wdmg\users;
  * Yii2 Users
  *
  * @category        Module
- * @version         1.2.5
+ * @version         1.2.6
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-users
  * @copyright       Copyright (c) 2019 - 2023 W.D.M.Group, Ukraine
@@ -47,7 +47,7 @@ class Module extends BaseModule
     /**
      * @var string the module version
      */
-    private $version = "1.2.5";
+    private $version = "1.2.6";
 
     /**
      * @var integer, priority of initialization

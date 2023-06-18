@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 1.2.6 (2023-06-18)
+ * Fixed getUserId()
+ * Fixed copyrights
+
 ## 1.2.5 (2021-06-20)
  * Fixed: syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM)
 

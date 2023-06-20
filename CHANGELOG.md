@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 1.2.7 (2023-06-20)
+ * Fixed identity, add user options
+
 ## 1.2.6 (2023-06-18)
  * Fixed getUserId()
  * Fixed copyrights

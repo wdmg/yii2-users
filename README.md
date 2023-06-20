@@ -106,6 +106,7 @@ Use the `Module::dashboardNavItems()` method of the module to generate a navigat
     ?>
 
 # Status and version [ready to use]
+* v.1.2.7 - Fixed identity, add user options
 * v.1.2.6 - Fixed copyrights and getUserId()
 * v.1.2.5 - Fixed: syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM)
 * v.1.2.4 - Multiple Sign In`s and logoffs by session timeout

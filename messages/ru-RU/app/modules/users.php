@@ -83,6 +83,7 @@ return [
     'Password reset for {appname}' => 'Сброс пароля к сайту {appname}',
     'Hi {username}!' => 'Здравствуйте {username}!',
     'Follow the link below to reset your password: {link}' => 'Перейдите по данной ссылке для сброса вашего пароля: {link}',
+	'The value of field `{attribute}` must be a valid JSON, error: {error}.' => "Значение поля `{attribute}` должно быть валидным JSON-значением, ошибка: {error}.",
 
     'Check your email for confirmation registration.' => 'Проверьте свою электронную почту для подтверждения регистрации.',
     'Error sending registration confirmation email.' => 'Ошибка отправки электронного письма с подтверждением регистрации.',

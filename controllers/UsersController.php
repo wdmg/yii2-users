@@ -210,12 +210,15 @@ class UsersController extends Controller
      * @return Users the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id, $rest = false)
     {
         if (($model = Users::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app/modules/users', 'The requested page does not exist.'));
+		if ($rest)
+            throw new NotFoundHttpException(Yii::t('app/modules/users', 'The requested user does not exist.'));
+		else
+            throw new NotFoundHttpException(Yii::t('app/modules/users', 'The requested page does not exist.'));
     }
 }

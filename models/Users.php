@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 use wdmg\helpers\ArrayHelper;
+use wdmg\validators\JsonValidator;
 
 
 /**
@@ -20,6 +21,7 @@ use wdmg\helpers\ArrayHelper;
  * @property string $password_reset_token
  * @property string $email
  * @property int $status
+ * @property string $options
  * @property string $created_at
  * @property string $updated_at
  */
@@ -36,7 +38,10 @@ class Users extends ActiveRecord implements IdentityInterface
     const USR_STATUS_ACTIVE = 10;
     const USR_STATUS_BLOCKED = 15;
 
-    const USR_UPDATE_OR_CREATE_PASSWD = 'manage_user_password';
+
+    const SCENARIO_CREATE = 'create_user';
+	const SCENARIO_UPDATE = 'update_user';
+	const USR_UPDATE_OR_CREATE_PASSWD = 'manage_user_password';
 
     public $is_online;
     public $role;
@@ -86,8 +91,8 @@ class Users extends ActiveRecord implements IdentityInterface
             [['status'], 'integer'],
             [['status'], 'default', 'value' => self::USR_STATUS_ACTIVE],
             [['status'], 'in', 'range' => [self::USR_STATUS_DELETED, self::USR_STATUS_WAITING, self::USR_STATUS_ACTIVE, self::USR_STATUS_BLOCKED]],
-
-            [['role'], 'in', 'range' => $this->getAllRoles(false), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
+	        ['options', JsonValidator::class, 'message' => Yii::t('app/modules/menu', 'The value of field `{attribute}` must be a valid JSON, error: {error}.')],
+	        [['role'], 'in', 'range' => $this->getAllRoles(false), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'string', 'min' => 8, 'max' => 24, 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[A-Z]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char in uppercase.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
             [['password', 'password_confirm'], 'match', 'pattern' => '/(.*[\d]){1,}.*/', 'message' => Yii::t('app/modules/users', 'The password must contains min 1 char as number.'), 'on' => self::USR_UPDATE_OR_CREATE_PASSWD],
@@ -97,6 +102,17 @@ class Users extends ActiveRecord implements IdentityInterface
 
         ];
     }
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function scenarios()
+	{
+		$scenarios = parent::scenarios();
+		$scenarios[self::SCENARIO_CREATE] = ['username', 'email', 'password', 'password_confirm'];
+		$scenarios[self::SCENARIO_UPDATE] = ['email', 'password', 'password_confirm'];
+		return $scenarios;
+	}
 
     /**
      * {@inheritdoc}
@@ -262,7 +278,8 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
-        return $this->getPrimaryKey();
+        //return $this->getPrimaryKey();
+	    return $this->id;
     }
 
 	/**
@@ -469,6 +486,43 @@ class Users extends ActiveRecord implements IdentityInterface
             $this->is_online = false;
 
         return $this->is_online;
+    }
+
+    /** Check and return user option(s)
+     *
+     * @return mixed
+     */
+    public static function getOptions($name = null, $default = null)
+    {
+
+	    $user = static::findOne(Yii::$app->getUser()->getIdentity()->getId());
+        if (!empty($user->options)) {
+
+	        $options = $user->options;
+	        if (!is_null($name)) {
+
+		        if (isset($options[$name]))
+			        return $options[$name];
+
+	        } else {
+		        return $options;
+	        }
+        }
+
+        return $default;
+    }
+
+    /** Check and return user option(s)
+     *
+     * @return mixed
+     */
+    public static function setOptions($values = null, $json_validation = true)
+    {
+		$options = self::getOptions();
+	    $options = array_merge($options, $values);
+	    $user = static::findOne(Yii::$app->getUser()->getIdentity()->getId());
+	    $user->options = $options;
+        return $user->update((bool)$json_validation, ['options']);
     }
 
     /**
